@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/config/site";
 import type { NavSection } from "@/types";
@@ -22,8 +23,7 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
     };
   }, []);
 
-  function toggleTheme() {
-    const next = !dark;
+  function toggleTheme(next: boolean) {
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
     localStorage.theme = next ? "dark" : "light";
@@ -51,9 +51,13 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <button onClick={toggleTheme} className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label={dark ? "Use light theme" : "Use dark theme"}>
-              <span aria-hidden>{dark ? "☀" : "◐"}</span>
-            </button>
+            <DarkModeSwitch
+              checked={dark}
+              onChange={toggleTheme}
+              size={24}
+              aria-label={dark ? "Use light theme" : "Use dark theme"}
+              className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
+            />
             <Link href="/#contact" className="btn-primary hidden rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project →</Link>
             <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation">☰</button>
           </div>
