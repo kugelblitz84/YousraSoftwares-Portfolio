@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "@/styles/globals.css";
 import { RevealController } from "@/components/ui/reveal-controller";
+import { SmoothScroll } from "@/components/ui/smooth-scroll";
 
 export const metadata: Metadata = {
   title: { default: "YusraSoftwares — Web, Mobile & AI Product Development", template: "%s | YusraSoftwares" },
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="bg-white text-zinc-900 antialiased dark:bg-zinc-950 dark:text-white">
         <Script id="theme-init" strategy="beforeInteractive">{"document.documentElement.classList.toggle('dark',localStorage.theme==='dark'||(!('theme' in localStorage)&&matchMedia('(prefers-color-scheme:dark)').matches));"}</Script>
         <RevealController />
+        <SmoothScroll />
         {children}
       </body>
     </html>

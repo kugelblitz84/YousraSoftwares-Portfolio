@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @theme inline { --color-accent: #0ea5e9; --font-sans: "DM Sans", sans-serif; }
 :root { --accent: #0ea5e9; --accent-strong: #0284c7; --cyan: #22d3ee; --ink: #09090b; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
 body { font-family: "DM Sans", sans-serif; }
 .font-display { font-family: "PT Sans", sans-serif; }
 ::selection { background: rgba(14, 165, 233, .25); }

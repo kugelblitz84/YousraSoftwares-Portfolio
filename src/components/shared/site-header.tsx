@@ -10,10 +10,12 @@ import type { NavSection } from "@/types";
 export function SiteHeader({ active = "home" }: { active?: NavSection }) {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
+  const [themeReady, setThemeReady] = useState(false);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       setDark(document.documentElement.classList.contains("dark"));
+      setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
     window.addEventListener("keydown", close);
@@ -51,13 +53,15 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <DarkModeSwitch
-              checked={dark}
-              onChange={toggleTheme}
-              size={24}
-              aria-label={dark ? "Use light theme" : "Use dark theme"}
-              className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
-            />
+            <span className="grid h-10 w-10 place-items-center">
+              {themeReady && <DarkModeSwitch
+                checked={dark}
+                onChange={toggleTheme}
+                size={24}
+                aria-label={dark ? "Use light theme" : "Use dark theme"}
+                className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
+              />}
+            </span>
             <Link href="/#contact" className="btn-primary hidden rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project →</Link>
             <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation">☰</button>
           </div>
