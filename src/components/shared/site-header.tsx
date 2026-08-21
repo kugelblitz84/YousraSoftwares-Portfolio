@@ -2,17 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import type { NavSection } from "@/types";
 
 export function SiteHeader({ active = "home" }: { active?: NavSection }) {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
+  const [themeReady, setThemeReady] = useState(false);
+  const themeOrigin = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       setDark(document.documentElement.classList.contains("dark"));
+      setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
     window.addEventListener("keydown", close);
@@ -22,11 +26,26 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
     };
   }, []);
 
-  function toggleTheme() {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.theme = next ? "dark" : "light";
+  function toggleTheme(next: boolean) {
+    const applyTheme = () => {
+      setDark(next);
+      document.documentElement.classList.toggle("dark", next);
+      localStorage.theme = next ? "dark" : "light";
+    };
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reducedMotion && "startViewTransition" in document) {
+      const root = document.documentElement;
+      const { x, y } = themeOrigin.current;
+      const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      root.style.setProperty("--theme-transition-x", `${x}px`);
+      root.style.setProperty("--theme-transition-y", `${y}px`);
+      root.style.setProperty("--theme-transition-radius", `${radius}px`);
+      document.startViewTransition(applyTheme);
+      return;
+    }
+
+    applyTheme();
   }
 
   const isCurrent = (label: string) =>
@@ -51,9 +70,19 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <button onClick={toggleTheme} className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label={dark ? "Use light theme" : "Use dark theme"}>
-              <span aria-hidden>{dark ? "☀" : "◐"}</span>
-            </button>
+            <span className="grid h-10 w-10 place-items-center">
+              {themeReady && <DarkModeSwitch
+                checked={dark}
+                onChange={toggleTheme}
+                onClick={(event) => {
+                  const rect = event.currentTarget.getBoundingClientRect();
+                  themeOrigin.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                }}
+                size={24}
+                aria-label={dark ? "Use light theme" : "Use dark theme"}
+                className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
+              />}
+            </span>
             <Link href="/#contact" className="btn-primary hidden rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project →</Link>
             <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation">☰</button>
           </div>

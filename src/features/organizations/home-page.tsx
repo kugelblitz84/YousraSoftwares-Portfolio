@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/ui/reveal";
 
 const services = [
   ["01", "UI/UX Design", "Intuitive, modern interfaces designed around your users and business goals.", "Figma · Prototyping · Design Systems", "lg:col-span-2"],
@@ -25,19 +26,19 @@ export function HomePage() {
       <section id="hero" className="relative overflow-hidden pt-32 sm:pt-40">
         <div className="soft-grid absolute inset-0 -z-10" />
         <div className="shell grid min-h-[720px] items-center gap-10 pb-20 lg:grid-cols-2">
-          <div className="reveal">
+          <Reveal>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs text-sky-700 dark:border-sky-900 dark:bg-sky-950/50 dark:text-sky-300"><span className="h-2 w-2 rounded-full bg-cyan-400" />Available for new projects</div>
             <p className="eyebrow">Digital product development studio</p>
             <h1 className="balance mt-5 font-display text-5xl leading-[.94] font-bold tracking-[-.045em] uppercase sm:text-7xl xl:text-8xl">From idea to <span className="text-gradient">digital reality</span></h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">We design, build, and scale modern web platforms, mobile apps, and AI-powered solutions for businesses.</p>
             <div className="mt-9 flex flex-wrap gap-3"><a href="#work" className="btn-primary rounded-full px-7 py-3.5 text-sm text-white">View Our Work</a><a href="#contact" className="rounded-full border border-zinc-300 px-7 py-3.5 text-sm dark:border-zinc-700">Start a Project</a></div>
             <p className="mt-10 text-xs font-semibold tracking-[.24em] text-zinc-400">DESIGN · DEVELOP · DEPLOY · SCALE</p>
-          </div>
-          <div className="product-stage reveal" aria-label="Web and mobile product interface composition">
+          </Reveal>
+          <Reveal className="product-stage" aria-label="Web and mobile product interface composition">
             <div className="device absolute top-8 right-8 left-0 rounded-3xl p-4"><div className="mb-4 flex gap-2"><i className="h-2.5 w-2.5 rounded-full bg-sky-400" /><i className="h-2.5 w-2.5 rounded-full bg-zinc-300" /><i className="h-2.5 w-2.5 rounded-full bg-zinc-300" /></div><div className="grid grid-cols-[.35fr_.65fr] gap-3"><div className="h-64 rounded-2xl bg-zinc-100 dark:bg-zinc-800" /><div><div className="brand-gradient h-32 rounded-2xl p-5 text-white">Products that move businesses forward.</div><div className="mt-3 grid grid-cols-2 gap-3"><div className="h-28 rounded-2xl bg-zinc-100 dark:bg-zinc-800" /><div className="h-28 rounded-2xl bg-zinc-100 dark:bg-zinc-800" /></div></div></div></div>
             <div className="device absolute right-0 bottom-0 w-44 rounded-[2rem] p-3"><div className="rounded-[1.5rem] bg-zinc-950 p-4 text-white"><p className="text-[10px] text-cyan-300">MOBILE PRODUCT</p><p className="mt-2 font-display text-xl font-bold">Built for every screen.</p><div className="brand-gradient mt-6 h-32 rounded-2xl" /></div></div>
             <div className="absolute bottom-8 left-0 rounded-2xl border border-sky-200 bg-white p-4 shadow-xl dark:border-sky-900 dark:bg-zinc-900"><Image src="/assets/logos/yusrasoftwares-mark.svg" width={40} height={40} alt="" /><p className="mt-2 text-xs font-semibold">From Idea to Production</p></div>
-          </div>
+          </Reveal>
         </div>
         <div className="border-y border-zinc-200 dark:border-zinc-800"><div className="shell grid sm:grid-cols-3">{[["WEB","Full-stack platforms"],["MOBILE","Cross-platform apps"],["AI","Intelligent integrations"]].map(([name, text], index) => <div key={name} className={"py-6 " + (index === 1 ? "sm:px-8" : "")}><b>{name}</b><p className="text-sm text-zinc-500">{text}</p></div>)}</div></div>
       </section>
