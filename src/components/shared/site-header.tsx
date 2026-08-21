@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import type { NavSection } from "@/types";
 
@@ -11,6 +11,7 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
+  const themeOrigin = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -26,9 +27,25 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
   }, []);
 
   function toggleTheme(next: boolean) {
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.theme = next ? "dark" : "light";
+    const applyTheme = () => {
+      setDark(next);
+      document.documentElement.classList.toggle("dark", next);
+      localStorage.theme = next ? "dark" : "light";
+    };
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reducedMotion && "startViewTransition" in document) {
+      const root = document.documentElement;
+      const { x, y } = themeOrigin.current;
+      const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      root.style.setProperty("--theme-transition-x", `${x}px`);
+      root.style.setProperty("--theme-transition-y", `${y}px`);
+      root.style.setProperty("--theme-transition-radius", `${radius}px`);
+      document.startViewTransition(applyTheme);
+      return;
+    }
+
+    applyTheme();
   }
 
   const isCurrent = (label: string) =>
@@ -57,6 +74,10 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
               {themeReady && <DarkModeSwitch
                 checked={dark}
                 onChange={toggleTheme}
+                onClick={(event) => {
+                  const rect = event.currentTarget.getBoundingClientRect();
+                  themeOrigin.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                }}
                 size={24}
                 aria-label={dark ? "Use light theme" : "Use dark theme"}
                 className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
