@@ -204,13 +204,350 @@ export function ServicesSection() {
 }
 
 const projectTypes = ["Web Platform", "Mobile Application", "AI Product"];
-const capabilities = [["WEB", "Next.js · React · Tailwind CSS"], ["BACKEND", "NestJS · Node.js · REST APIs"], ["MOBILE", "Flutter · Dart"], ["DESIGN", "Figma · Prototyping"], ["AI", "LLM Integration · AI APIs · RAG"]];
-const insights = [["Engineering", "Building software that is ready to evolve"], ["Product", "From business problem to product scope"], ["AI", "Where AI integration creates real value"]];
+const capabilities = [
+  ["WEB", "Next.js · React · Tailwind CSS"],
+  ["BACKEND", "NestJS · Node.js · REST APIs"],
+  ["MOBILE", "Flutter · Dart"],
+  ["DESIGN", "Figma · Prototyping"],
+  ["AI", "LLM Integration · AI APIs · RAG"],
+];
+const insights = [
+  ["Engineering", "Building software that is ready to evolve"],
+  ["Product", "From business problem to product scope"],
+  ["AI", "Where AI integration creates real value"],
+];
 
-export function CapabilitySection() { return <section className="border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40"><div className="section-pad shell grid gap-10 lg:grid-cols-2"><div><p className="eyebrow">End-to-end capability</p><h2 className="mt-3 font-display text-4xl font-bold">One team. From idea to production.</h2><p className="mt-5 text-zinc-500">From early product concepts and interface design to backend engineering, mobile development, AI integration, deployment, and ongoing improvement—we support the complete product lifecycle.</p></div><ol className="grid gap-px overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-200 sm:grid-cols-3 dark:border-zinc-800 dark:bg-zinc-800">{["Discover","Design","Develop","Test","Deploy","Improve"].map((label,index)=><li key={label} className="bg-white p-6 dark:bg-zinc-950"><span className="mr-2 text-base font-extrabold text-accent">{String(index+1).padStart(2,"0")}</span>{label}</li>)}</ol></div></section>; }
-export function WorkSection() { return <section id="work" className="section-pad shell"><div className="flex flex-wrap items-end justify-between gap-5"><div><p className="eyebrow">Our work</p><h2 className="mt-3 font-display text-5xl font-bold">Selected Work</h2><p className="mt-4 max-w-2xl text-zinc-500">A selection of products, platforms, and experiences built by members of our team.</p></div><Link href="/projects" className="text-accent">Explore Projects →</Link></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{projectTypes.map(type=><article key={type} className="card overflow-hidden"><Image src="/assets/projects/project-placeholder.svg" width={1200} height={760} alt={type+" project placeholder"}/><div className="p-6"><p className="eyebrow">{type} · Project slot</p><h3 className="mt-2 text-2xl font-bold">[PROJECT NAME]</h3><p className="mt-3 text-zinc-500">Add the verified problem and solution.</p><Link href="/case-study" className="mt-6 inline-flex text-accent">View Case Study →</Link></div></article>)}</div></section>; }
-export function AboutSection() { return <section id="about" className="section-pad bg-zinc-950 text-white"><div className="shell grid gap-10 lg:grid-cols-2"><div><p className="eyebrow">About us</p><h2 className="mt-3 font-display text-5xl font-bold">A small team built to create serious products.</h2></div><div className="space-y-5 text-zinc-400"><p>YusraSoftwares is a software development studio focused on turning business ideas into reliable digital products. Our team brings together experience in product design, full-stack development, mobile development, and AI integration.</p><p>We work across the complete development lifecycle—from understanding the problem and designing the experience to engineering, deployment, maintenance, and scaling.</p><p>Our approach combines thoughtful product decisions with clean engineering, clear communication, and technology selected for the problem rather than for hype.</p></div></div><div className="shell mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">{capabilities.map(([name,tech])=><div key={name} className="rounded-2xl border border-zinc-800 p-5">{name}<br/><small>{tech}</small></div>)}</div></section>; }
-export function TeamSection() { return <section className="section-pad shell"><p className="eyebrow">People</p><h2 className="mt-3 font-display text-5xl font-bold">Meet the Team</h2><p className="mt-4 text-zinc-500">Profiles are ready for verified names, roles, photos, and professional links.</p><div className="mt-10 grid gap-5 sm:grid-cols-2">{[1,2].map(member=><article key={member} className="card p-6"><div className="grid aspect-video place-items-center bg-zinc-100 dark:bg-zinc-800">[TEAM PHOTO]</div><h3 className="mt-5 font-bold">[TEAM MEMBER NAME]</h3><p className="text-accent">[ROLE]</p><p className="text-zinc-500">[ONE-LINE SPECIALIZATION]</p></article>)}</div></section>; }
-export function WhyUsSection() { return <section className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40"><div className="shell"><p className="eyebrow">Why YusraSoftwares</p><h2 className="mt-3 font-display text-4xl font-bold">Why Work With Us</h2><div className="mt-10 grid gap-5 md:grid-cols-3">{[["End-to-End Capability","Design, web, mobile, backend, and AI under one team."],["Product-Focused Engineering","We build around the business problem, not just the technology."],["Built for the Long Term","Maintainable architecture designed to evolve as the product grows."]].map(([title,text])=><article key={title} className="card p-7"><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 text-zinc-500">{text}</p></article>)}</div></div></section>; }
-export function InsightsSection() { return <section id="insights" className="section-pad shell"><p className="eyebrow">Insights</p><h2 className="mt-3 font-display text-5xl font-bold">Ideas, Engineering & Product</h2><p className="mt-4 max-w-2xl text-zinc-500">Thoughts from our team on building better digital products, software engineering, design, AI, and technology.</p><div className="mt-10 grid gap-5 md:grid-cols-3">{insights.map(([type,title])=><Link href="/blog-article" key={title} className="card p-7"><p className="eyebrow">{type}</p><h3 className="mt-5 text-xl font-bold">{title}</h3><span className="mt-7 inline-flex text-accent">Read Insight →</span></Link>)}</div></section>; }
-export function ContactSection() { return <section id="contact" className="section-pad bg-zinc-950 text-white"><div className="shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]"><div><p className="eyebrow">Start a project</p><h2 className="mt-3 font-display text-5xl font-bold">Let&apos;s Build Something</h2><p className="mt-5 text-zinc-400">Have a product to build, an existing system to improve, or a technical problem to solve? Tell us about it and we&apos;ll get back to you.</p><dl className="mt-9 text-sm"><dt className="text-zinc-500">Business email</dt><dd>[COMPANY EMAIL]</dd><dt className="mt-5 text-zinc-500">Profiles</dt><dd>Facebook · LinkedIn · GitHub — URLs pending</dd></dl></div><form className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 sm:p-8" aria-describedby="form-note"><div className="grid gap-5 sm:grid-cols-2">{[["Name*","name","name"],["Business / Company","company","organization"],["Email*","email","email"]].map(([label,name,auto])=><label key={name} className={name === "email" ? "sm:col-span-2" : ""}>{label}<input required={name !== "company"} name={name} autoComplete={auto} type={name === "email" ? "email" : "text"} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"/></label>)}<label className="sm:col-span-2">What do you need?*<select required name="service" defaultValue="" className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"><option value="">Select a service</option>{["Web Development","Mobile App Development","UI/UX Design","AI Integration","Bug Fix / Existing Project","Migration / Scaling","Other"].map(option=><option key={option}>{option}</option>)}</select></label><label className="sm:col-span-2">Project Details*<textarea required name="details" rows={5} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"/></label></div><button disabled className="mt-6 cursor-not-allowed rounded-full bg-zinc-700 px-6 py-3 text-sm text-zinc-400">Send Project Details →</button><p id="form-note" className="mt-3 text-xs text-zinc-500">Submission is disabled until a verified business email or form service is connected.</p></form></div></section>; }
+export function CapabilitySection() {
+  const lifecycle = [
+    ["Discover", "Goals, users, and the right product scope."],
+    ["Design", "Clear journeys and interfaces people enjoy."],
+    ["Develop", "Reliable systems built for real-world use."],
+    ["Test", "Quality, performance, and every critical detail."],
+    ["Deploy", "A smooth, secure path into production."],
+    ["Improve", "Measure, refine, maintain, and scale."],
+  ];
+
+  return (
+    <section className="relative overflow-hidden border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <div className="soft-grid absolute inset-0 opacity-60" />
+      <div className="section-pad shell relative">
+        <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_30px_80px_rgba(2,132,199,0.08)] dark:border-zinc-800 dark:bg-zinc-950">
+          <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
+            <div className="relative overflow-hidden bg-zinc-950 p-7 text-white sm:p-10 lg:p-12">
+              <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl" />
+              <div className="absolute right-0 bottom-0 h-52 w-52 translate-x-1/3 translate-y-1/3 rounded-full border-[34px] border-cyan-300/10" />
+
+              <div className="relative flex h-full min-h-[150px] flex-col justify-between">
+                <div>
+                  <p className="text-xs font-bold tracking-[.2em] text-cyan-300 uppercase">
+                    End-to-end capability
+                  </p>
+                  <h2 className="balance mt-5 font-display text-4xl leading-[1.02] font-bold tracking-tight sm:text-5xl">
+                    One team. Every step. No handoff gaps.
+                  </h2>
+                  <p className="mt-6 max-w-md text-sm leading-7 text-zinc-400 sm:text-base">
+                    We bring product thinking, design, engineering, deployment,
+                    and ongoing improvement together under one roof.
+                  </p>
+                </div>
+
+                <div className="mt-10 flex flex-wrap gap-2">
+                  {["Web", "Mobile", "Backend", "AI"].map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-zinc-300"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <ol className="grid sm:grid-cols-2">
+              {lifecycle.map(([label, description], index) => (
+                <li
+                  key={label}
+                  className="group relative min-h-44 border-b border-zinc-200 p-6 last:border-b-0 sm:p-8 sm:nth-[5]:border-b-0 dark:border-zinc-800 sm:odd:border-r"
+                >
+                  <div className="flex items-start justify-between gap-5">
+                    <span className="text-sm font-extrabold tracking-[.16em] text-sky-500">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="h-2 w-2 rounded-full bg-zinc-200 transition-all duration-300 group-hover:scale-150 group-hover:bg-cyan-400 dark:bg-zinc-700"
+                    />
+                  </div>
+                  <h3 className="mt-8 font-display text-2xl font-bold tracking-tight">
+                    {label}
+                  </h3>
+                  <p className="mt-2 max-w-xs text-sm leading-relaxed text-zinc-500">
+                    {description}
+                  </p>
+                  <div className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-sky-500 to-cyan-300 transition-transform duration-300 group-hover:scale-x-100" />
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+export function WorkSection() {
+  return (
+    <section id="work" className="section-pad shell">
+      <div className="flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <p className="eyebrow">Our work</p>
+          <h2 className="mt-3 font-display text-5xl font-bold">
+            Selected Work
+          </h2>
+          <p className="mt-4 max-w-2xl text-zinc-500">
+            A selection of products, platforms, and experiences built by members
+            of our team.
+          </p>
+        </div>
+        <Link href="/projects" className="text-accent">
+          Explore Projects →
+        </Link>
+      </div>
+      <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        {projectTypes.map((type) => (
+          <article key={type} className="card overflow-hidden">
+            <Image
+              src="/assets/projects/project-placeholder.svg"
+              width={1200}
+              height={760}
+              alt={type + " project placeholder"}
+            />
+            <div className="p-6">
+              <p className="eyebrow">{type} · Project slot</p>
+              <h3 className="mt-2 text-2xl font-bold">[PROJECT NAME]</h3>
+              <p className="mt-3 text-zinc-500">
+                Add the verified problem and solution.
+              </p>
+              <Link href="/case-study" className="mt-6 inline-flex text-accent">
+                View Case Study →
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+export function AboutSection() {
+  return (
+    <section id="about" className="section-pad bg-zinc-950 text-white">
+      <div className="shell grid gap-10 lg:grid-cols-2">
+        <div>
+          <p className="eyebrow">About us</p>
+          <h2 className="mt-3 font-display text-5xl font-bold">
+            A small team built to create serious products.
+          </h2>
+        </div>
+        <div className="space-y-5 text-zinc-400">
+          <p>
+            YusraSoftwares is a software development studio focused on turning
+            business ideas into reliable digital products. Our team brings
+            together experience in product design, full-stack development,
+            mobile development, and AI integration.
+          </p>
+          <p>
+            We work across the complete development lifecycle—from understanding
+            the problem and designing the experience to engineering, deployment,
+            maintenance, and scaling.
+          </p>
+          <p>
+            Our approach combines thoughtful product decisions with clean
+            engineering, clear communication, and technology selected for the
+            problem rather than for hype.
+          </p>
+        </div>
+      </div>
+      <div className="shell mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {capabilities.map(([name, tech]) => (
+          <div key={name} className="rounded-2xl border border-zinc-800 p-5">
+            {name}
+            <br />
+            <small>{tech}</small>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+export function TeamSection() {
+  return (
+    <section className="section-pad shell">
+      <p className="eyebrow">People</p>
+      <h2 className="mt-3 font-display text-5xl font-bold">Meet the Team</h2>
+      <p className="mt-4 text-zinc-500">
+        Profiles are ready for verified names, roles, photos, and professional
+        links.
+      </p>
+      <div className="mt-10 grid gap-5 sm:grid-cols-2">
+        {[1, 2].map((member) => (
+          <article key={member} className="card p-6">
+            <div className="grid aspect-video place-items-center bg-zinc-100 dark:bg-zinc-800">
+              [TEAM PHOTO]
+            </div>
+            <h3 className="mt-5 font-bold">[TEAM MEMBER NAME]</h3>
+            <p className="text-accent">[ROLE]</p>
+            <p className="text-zinc-500">[ONE-LINE SPECIALIZATION]</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+export function WhyUsSection() {
+  return (
+    <section className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <div className="shell">
+        <p className="eyebrow">Why YusraSoftwares</p>
+        <h2 className="mt-3 font-display text-4xl font-bold">
+          Why Work With Us
+        </h2>
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {[
+            [
+              "End-to-End Capability",
+              "Design, web, mobile, backend, and AI under one team.",
+            ],
+            [
+              "Product-Focused Engineering",
+              "We build around the business problem, not just the technology.",
+            ],
+            [
+              "Built for the Long Term",
+              "Maintainable architecture designed to evolve as the product grows.",
+            ],
+          ].map(([title, text]) => (
+            <article key={title} className="card p-7">
+              <h3 className="text-xl font-bold">{title}</h3>
+              <p className="mt-3 text-zinc-500">{text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+export function InsightsSection() {
+  return (
+    <section id="insights" className="section-pad shell">
+      <p className="eyebrow">Insights</p>
+      <h2 className="mt-3 font-display text-5xl font-bold">
+        Ideas, Engineering & Product
+      </h2>
+      <p className="mt-4 max-w-2xl text-zinc-500">
+        Thoughts from our team on building better digital products, software
+        engineering, design, AI, and technology.
+      </p>
+      <div className="mt-10 grid gap-5 md:grid-cols-3">
+        {insights.map(([type, title]) => (
+          <Link href="/blog-article" key={title} className="card p-7">
+            <p className="eyebrow">{type}</p>
+            <h3 className="mt-5 text-xl font-bold">{title}</h3>
+            <span className="mt-7 inline-flex text-accent">Read Insight →</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+export function ContactSection() {
+  return (
+    <section id="contact" className="section-pad bg-zinc-950 text-white">
+      <div className="shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+        <div>
+          <p className="eyebrow">Start a project</p>
+          <h2 className="mt-3 font-display text-5xl font-bold">
+            Let&apos;s Build Something
+          </h2>
+          <p className="mt-5 text-zinc-400">
+            Have a product to build, an existing system to improve, or a
+            technical problem to solve? Tell us about it and we&apos;ll get back
+            to you.
+          </p>
+          <dl className="mt-9 text-sm">
+            <dt className="text-zinc-500">Business email</dt>
+            <dd>[COMPANY EMAIL]</dd>
+            <dt className="mt-5 text-zinc-500">Profiles</dt>
+            <dd>Facebook · LinkedIn · GitHub — URLs pending</dd>
+          </dl>
+        </div>
+        <form
+          className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 sm:p-8"
+          aria-describedby="form-note"
+        >
+          <div className="grid gap-5 sm:grid-cols-2">
+            {[
+              ["Name*", "name", "name"],
+              ["Business / Company", "company", "organization"],
+              ["Email*", "email", "email"],
+            ].map(([label, name, auto]) => (
+              <label
+                key={name}
+                className={name === "email" ? "sm:col-span-2" : ""}
+              >
+                {label}
+                <input
+                  required={name !== "company"}
+                  name={name}
+                  autoComplete={auto}
+                  type={name === "email" ? "email" : "text"}
+                  className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"
+                />
+              </label>
+            ))}
+            <label className="sm:col-span-2">
+              What do you need?*
+              <select
+                required
+                name="service"
+                defaultValue=""
+                className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"
+              >
+                <option value="">Select a service</option>
+                {[
+                  "Web Development",
+                  "Mobile App Development",
+                  "UI/UX Design",
+                  "AI Integration",
+                  "Bug Fix / Existing Project",
+                  "Migration / Scaling",
+                  "Other",
+                ].map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </select>
+            </label>
+            <label className="sm:col-span-2">
+              Project Details*
+              <textarea
+                required
+                name="details"
+                rows={5}
+                className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"
+              />
+            </label>
+          </div>
+          <button
+            disabled
+            className="mt-6 cursor-not-allowed rounded-full bg-zinc-700 px-6 py-3 text-sm text-zinc-400"
+          >
+            Send Project Details →
+          </button>
+          <p id="form-note" className="mt-3 text-xs text-zinc-500">
+            Submission is disabled until a verified business email or form
+            service is connected.
+          </p>
+        </form>
+      </div>
+    </section>
+  );
+}
