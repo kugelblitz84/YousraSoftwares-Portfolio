@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <><SiteHeader active="insights" /><BlogPage /><SiteFooter /></>;
+  return <><SiteHeader /><BlogPage /><SiteFooter /></>;
 }

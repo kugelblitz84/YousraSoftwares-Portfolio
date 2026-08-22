@@ -4,15 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
-import type { NavSection } from "@/types";
 import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
-export function SiteHeader({ active = "home" }: { active?: NavSection }) {
+export function SiteHeader() {
+  const pathname = usePathname();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
+  const [hash, setHash] = useState("");
   const themeOrigin = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -21,10 +23,14 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
       setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
+    const updateHash = () => setHash(window.location.hash);
+    updateHash();
     window.addEventListener("keydown", close);
+    window.addEventListener("hashchange", updateHash);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("keydown", close);
+      window.removeEventListener("hashchange", updateHash);
     };
   }, []);
 
@@ -50,10 +56,12 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
     applyTheme();
   }
 
-  const isCurrent = (label: string) =>
-    (active === "home" && label === "Home") ||
-    (active === "work" && label === "Work") ||
-    (active === "insights" && label === "Insights");
+  const isCurrent = (href: string) => {
+    const [itemPath, itemHash = ""] = href.split("#");
+    if (pathname !== itemPath) return false;
+    if (!itemHash) return true;
+    return hash ? hash === `#${itemHash}` : itemHash === "hero";
+  };
 
   return (
     <>
@@ -68,11 +76,15 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
             {siteConfig.nav.map((item) => (
               <li key={item.label}>
                 <Link
+                  onClick={() => {
+                    const nextUrl = new URL(item.href, window.location.origin);
+                    setHash(nextUrl.hash);
+                  }}
                   className={`group nav-link inline-flex items-center ${
-                    isCurrent(item.label) ? "text-accent font-medium" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+                    isCurrent(item.href) ? "text-accent font-medium" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                   }`}
                   href={item.href}
-                  aria-current={isCurrent(item.label) ? "page" : undefined}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
                 >
                   <TextHoverRoll text={item.label} />
                 </Link>
