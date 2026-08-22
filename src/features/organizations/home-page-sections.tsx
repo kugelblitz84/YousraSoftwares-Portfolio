@@ -383,7 +383,7 @@ export function WorkSection() {
                 href="/case-study"
                 className="mt-6 inline-flex items-center gap-1.5 font-medium text-accent"
               >
-                <TextHoverRoll text="View Case Study" />
+                <TextHoverRoll text="View Projects" />
                 <RiArrowRightLine
                   className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
                   size={18}
@@ -554,7 +554,10 @@ export function InsightsSection() {
 }
 export function ContactSection() {
   return (
-    <section id="contact" className="section-pad bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-white">
+    <section
+      id="contact"
+      className="section-pad bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-white"
+    >
       <div className="shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
         <div>
           <p className="eyebrow">Start a project</p>
