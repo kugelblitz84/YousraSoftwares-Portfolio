@@ -18,9 +18,9 @@ export function HomePage() {
       <CapabilitySection />
       <WorkSection />
       <AboutSection />
-      <TeamSection />
+      {/* <TeamSection /> */}
       <WhyUsSection />
-      <InsightsSection />
+      {/* <InsightsSection /> */}
       <ContactSection />
     </main>
   );

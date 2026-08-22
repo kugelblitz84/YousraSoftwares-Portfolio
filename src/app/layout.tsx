@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "@/styles/globals.css";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
+import { CursorFollower } from "@/components/ui/cursor-follower";
 
 export const metadata: Metadata = {
   title: {
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }
         </Script>
         <SmoothScroll />
+        <CursorFollower />
         {children}
       </body>
     </html>

@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { RiArrowRightLine, RiArrowRightUpLine } from "@remixicon/react";
 import { Reveal } from "@/components/ui/reveal";
+import { SplitTextReveal } from "@/components/ui/split-text-reveal";
+import { KineticHeading } from "@/components/ui/kinetic-heading";
+import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
 const services = [
   [
@@ -47,30 +50,38 @@ export function HeroSection() {
       <div className="soft-grid absolute inset-0 -z-10" />
       <div className="shell grid min-h-[720px] items-center gap-10 pb-20 lg:grid-cols-2">
         <Reveal>
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs text-sky-700 dark:border-sky-900 dark:bg-sky-950/50 dark:text-sky-300">
-            <span className="h-2 w-2 rounded-full bg-cyan-400" />
+          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-sky-700 dark:border-sky-900 dark:bg-sky-950/50 dark:text-sky-300">
+            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
             Available for new projects
           </div>
           <p className="eyebrow">Digital product development studio</p>
-          <h1 className="balance mt-5 font-display text-5xl leading-[.94] font-bold tracking-[-.045em] uppercase sm:text-7xl xl:text-8xl">
-            From idea to <span className="text-gradient">digital reality</span>
-          </h1>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-            We design, build, and scale modern web platforms, mobile apps, and
-            AI-powered solutions for businesses.
-          </p>
+          <KineticHeading
+            as="h1"
+            className="mt-5 h-bram-hero text-5xl sm:text-7xl xl:text-8xl"
+            lines={[
+              { text: "From idea to" },
+              { text: "digital reality", italic: true, gradient: true },
+            ]}
+          />
+          <SplitTextReveal
+            text="We design, build, and scale modern web platforms, mobile apps, and AI-powered solutions for businesses."
+            className="mt-7 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400"
+            delay={0.2}
+          />
           <div className="mt-9 flex flex-wrap gap-3">
             <a
               href="#work"
-              className="btn-primary rounded-full px-7 py-3.5 text-sm text-white"
+              data-cursor-text="Explore"
+              className="group btn-primary rounded-full px-7 py-3.5 text-sm text-white transition-all duration-300"
             >
-              View Our Work
+              <TextHoverRoll text="View Our Work" />
             </a>
             <a
               href="#contact"
-              className="rounded-full border border-zinc-300 px-7 py-3.5 text-sm dark:border-zinc-700"
+              data-cursor-text="Contact"
+              className="group rounded-full border border-zinc-300 px-7 py-3.5 text-sm font-medium transition-colors hover:border-zinc-500 dark:border-zinc-700 dark:hover:border-zinc-500"
             >
-              Start a Project
+              <TextHoverRoll text="Start a Project" />
             </a>
           </div>
           <p className="mt-10 text-xs font-semibold tracking-[.24em] text-zinc-400">
@@ -183,20 +194,35 @@ export function ServicesSection() {
   return (
     <section id="services" className="section-pad shell">
       <p className="eyebrow">What we do</p>
-      <h2 className="mt-3 font-display text-5xl font-bold">Services</h2>
-      <p className="mt-5 max-w-2xl text-zinc-500">
-        End-to-end product expertise for new ideas, growing platforms, and
-        software that needs a stronger next chapter.
-      </p>
+      <KineticHeading
+        lines={[{ text: "Services" }]}
+        className="mt-3 h-bram-title text-4xl sm:text-5xl lg:text-6xl"
+      />
+      <SplitTextReveal
+        text="End-to-end product expertise for new ideas, growing platforms, and software that needs a stronger next chapter."
+        className="mt-5 max-w-2xl text-zinc-500 font-neue text-lg"
+        delay={0.15}
+      />
       <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-6">
         {services.map(([number, title, text, stack, span]) => (
-          <article key={number} className={"card p-7 " + span}>
+          <article
+            key={number}
+            data-cursor-text="Service"
+            className={
+              "card p-7 transition-all duration-300 hover:border-sky-400 " +
+              span
+            }
+          >
             <span className="text-base font-extrabold text-accent">
               {number}
             </span>
-            <h3 className="mt-8 font-display text-2xl font-bold">{title}</h3>
-            <p className="mt-3 text-sm text-zinc-500">{text}</p>
-            <p className="mt-7 text-xs text-zinc-400">{stack}</p>
+            <h3 className="mt-8 font-neue text-2xl font-medium tracking-tight">
+              {title}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-zinc-500">{text}</p>
+            <p className="mt-7 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+              {stack}
+            </p>
           </article>
         ))}
       </div>
@@ -217,13 +243,6 @@ const selectedWorks = [
     projectType: "Mobile Platform",
     projectName: "Mobile Application",
   },
-];
-const capabilities = [
-  ["WEB", "Next.js · React · Tailwind CSS"],
-  ["BACKEND", "NestJS · Node.js · REST APIs"],
-  ["MOBILE", "Flutter · Dart"],
-  ["DESIGN", "Figma · Prototyping"],
-  ["AI", "LLM Integration · AI APIs · RAG"],
 ];
 const insights = [
   ["Engineering", "Building software that is ready to evolve"],
@@ -315,44 +334,58 @@ export function WorkSection() {
       <div className="flex flex-wrap items-end justify-between gap-5">
         <div>
           <p className="eyebrow">Our works</p>
-          <h2 className="mt-3 font-display text-5xl font-bold">
-            Selected Works
-          </h2>
-          <p className="mt-4 max-w-2xl text-zinc-500">
+          <KineticHeading
+            lines={[{ text: "Selected Works" }]}
+            className="mt-3 h-bram-title text-4xl sm:text-5xl"
+          />
+          <p className="mt-4 max-w-2xl text-zinc-500 font-neue text-base">
             A selection of products, platforms, and experiences built by members
             of our team.
           </p>
         </div>
         <Link
           href="/projects"
-          className="inline-flex items-center gap-1.5 text-accent"
+          className="group inline-flex items-center gap-1.5 font-medium text-accent hover:text-accent-strong"
         >
-          Explore Projects{" "}
-          <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
+          <TextHoverRoll text="Explore Projects" />
+          <RiArrowRightLine
+            className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+            size={18}
+            aria-hidden="true"
+          />
         </Link>
       </div>
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         {selectedWorks.map((work) => (
-          <article key={work.projectName} className="card overflow-hidden">
-            <Image
-              src="/assets/projects/project-placeholder.svg"
-              width={1200}
-              height={760}
-              alt={work.projectType + " project placeholder"}
-            />
+          <article
+            key={work.projectName}
+            data-cursor-text="View Project"
+            className="card group overflow-hidden transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+          >
+            <div className="overflow-hidden">
+              <Image
+                src="/assets/projects/project-placeholder.svg"
+                width={1200}
+                height={760}
+                alt={work.projectType + " project placeholder"}
+                className="transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
             <div className="p-6">
               <p className="eyebrow">{work.projectType} · Project slot</p>
-              <h3 className="mt-2 text-2xl font-bold">{work.projectName}</h3>
-              <p className="mt-3 text-zinc-500">
+              <h3 className="mt-2 font-neue text-2xl font-medium">
+                {work.projectName}
+              </h3>
+              <p className="mt-3 text-sm text-zinc-500">
                 Add the verified problem and solution.
               </p>
               <Link
                 href="/case-study"
-                className="mt-6 inline-flex items-center gap-1.5 text-accent"
+                className="mt-6 inline-flex items-center gap-1.5 font-medium text-accent"
               >
-                View Case Study{" "}
+                <TextHoverRoll text="View Case Study" />
                 <RiArrowRightLine
-                  className="shrink-0"
+                  className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
                   size={18}
                   aria-hidden="true"
                 />
@@ -366,41 +399,41 @@ export function WorkSection() {
 }
 export function AboutSection() {
   return (
-    <section id="about" className="section-pad bg-zinc-950 text-white">
-      <div className="shell grid gap-10 lg:grid-cols-2">
-        <div>
-          <p className="eyebrow">About us</p>
-          <h2 className="mt-3 font-display text-5xl font-bold">
-            A small team built to create serious products.
-          </h2>
-        </div>
-        <div className="space-y-5 text-zinc-400">
-          <p>
-            YusraSoftwares is a software development studio focused on turning
-            business ideas into reliable digital products. Our team brings
-            together experience in product design, full-stack development,
-            mobile development, and AI integration.
-          </p>
-          <p>
-            We work across the complete development lifecycle—from understanding
-            the problem and designing the experience to engineering, deployment,
-            maintenance, and scaling.
-          </p>
-          <p>
-            Our approach combines thoughtful product decisions with clean
-            engineering, clear communication, and technology selected for the
-            problem rather than for hype.
-          </p>
-        </div>
-      </div>
-      <div className="shell mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        {capabilities.map(([name, tech]) => (
-          <div key={name} className="rounded-2xl border border-zinc-800 p-5">
-            {name}
-            <br />
-            <small>{tech}</small>
+    <section
+      id="about"
+      className="relative overflow-hidden border-y border-zinc-200 bg-zinc-50 text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white"
+    >
+      <div className="soft-grid absolute inset-0 opacity-30" />
+      <div className="absolute top-1/2 left-0 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-400/10 blur-3xl dark:bg-sky-500/10" />
+      <div className="section-pad shell relative">
+        <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-sky-500 dark:bg-cyan-300" />
+              <p className="eyebrow">About us</p>
+            </div>
+            <KineticHeading
+              lines={[
+                { text: "A small team built to create" },
+                { text: "serious products.", italic: true, gradient: true },
+              ]}
+              className="mt-6 max-w-lg h-bram-title text-4xl sm:text-6xl"
+            />
           </div>
-        ))}
+          <div>
+            <div className="space-y-6 border-l border-zinc-300 pl-6 text-base leading-8 text-zinc-600 sm:pl-10 sm:text-lg dark:border-white/10 dark:text-zinc-400">
+              <SplitTextReveal text="YusraSoftwares is a software development studio focused on turning business ideas into reliable digital products. Our team brings together experience in product design, full-stack development, mobile development, and AI integration." />
+              <SplitTextReveal
+                text="We work across the complete development lifecycle—from understanding the problem and designing the experience to engineering, deployment, maintenance, and scaling."
+                delay={0.1}
+              />
+              <SplitTextReveal
+                text="Our approach combines thoughtful product decisions with clean engineering, clear communication, and technology selected for the problem rather than for hype."
+                delay={0.2}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -409,20 +442,32 @@ export function TeamSection() {
   return (
     <section className="section-pad shell">
       <p className="eyebrow">People</p>
-      <h2 className="mt-3 font-display text-5xl font-bold">Meet the Team</h2>
-      <p className="mt-4 text-zinc-500">
+      <KineticHeading
+        lines={[
+          { text: "Meet the" },
+          { text: "team", italic: true, gradient: true },
+        ]}
+        className="mt-3 h-bram-title text-4xl sm:text-5xl"
+      />
+      <p className="mt-4 text-zinc-500 font-neue">
         Profiles are ready for verified names, roles, photos, and professional
         links.
       </p>
       <div className="mt-10 grid gap-5 sm:grid-cols-2">
         {[1, 2].map((member) => (
-          <article key={member} className="card p-6">
+          <article
+            key={member}
+            data-cursor-text="Team"
+            className="card p-6 transition-all duration-300 hover:border-sky-400"
+          >
             <div className="grid aspect-video place-items-center bg-zinc-100 dark:bg-zinc-800">
               [TEAM PHOTO]
             </div>
-            <h3 className="mt-5 font-bold">[TEAM MEMBER NAME]</h3>
-            <p className="text-accent">[ROLE]</p>
-            <p className="text-zinc-500">[ONE-LINE SPECIALIZATION]</p>
+            <h3 className="mt-5 font-neue font-medium text-lg">
+              [TEAM MEMBER NAME]
+            </h3>
+            <p className="text-accent text-sm">[ROLE]</p>
+            <p className="text-zinc-500 text-sm">[ONE-LINE SPECIALIZATION]</p>
           </article>
         ))}
       </div>
@@ -434,9 +479,10 @@ export function WhyUsSection() {
     <section className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40">
       <div className="shell">
         <p className="eyebrow">Why YusraSoftwares</p>
-        <h2 className="mt-3 font-display text-4xl font-bold">
-          Why Work With Us
-        </h2>
+        <KineticHeading
+          lines={[{ text: "Why Work With Us" }]}
+          className="mt-3 h-bram-title text-3xl"
+        />
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {[
             [
@@ -452,9 +498,14 @@ export function WhyUsSection() {
               "Maintainable architecture designed to evolve as the product grows.",
             ],
           ].map(([title, text]) => (
-            <article key={title} className="card p-7">
-              <h3 className="text-xl font-bold">{title}</h3>
-              <p className="mt-3 text-zinc-500">{text}</p>
+            <article
+              key={title}
+              className="card p-7 transition-all duration-300 hover:border-sky-400"
+            >
+              <h3 className="text-xl font-neue font-medium">{title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                {text}
+              </p>
             </article>
           ))}
         </div>
@@ -466,22 +517,31 @@ export function InsightsSection() {
   return (
     <section id="insights" className="section-pad shell">
       <p className="eyebrow">Insights</p>
-      <h2 className="mt-3 font-display text-5xl font-bold">
-        Ideas, Engineering & Product
-      </h2>
-      <p className="mt-4 max-w-2xl text-zinc-500">
+      <KineticHeading
+        lines={[
+          { text: "Ideas, engineering &" },
+          { text: "product vision", italic: true, gradient: true },
+        ]}
+        className="mt-3 h-bram-title text-4xl sm:text-5xl"
+      />
+      <p className="mt-4 max-w-2xl text-zinc-500 font-neue">
         Thoughts from our team on building better digital products, software
         engineering, design, AI, and technology.
       </p>
       <div className="mt-10 grid gap-5 md:grid-cols-3">
         {insights.map(([type, title]) => (
-          <Link href="/blog-article" key={title} className="card p-7">
+          <Link
+            href="/blog-article"
+            key={title}
+            data-cursor-text="Read"
+            className="card group p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-sky-400"
+          >
             <p className="eyebrow">{type}</p>
-            <h3 className="mt-5 text-xl font-bold">{title}</h3>
-            <span className="mt-7 inline-flex items-center gap-1.5 text-accent">
-              Read Insight{" "}
+            <h3 className="mt-5 text-xl font-neue font-medium">{title}</h3>
+            <span className="mt-7 inline-flex items-center gap-1.5 font-medium text-accent">
+              <TextHoverRoll text="Read Insight" />
               <RiArrowRightLine
-                className="shrink-0"
+                className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
                 size={18}
                 aria-hidden="true"
               />
@@ -494,27 +554,31 @@ export function InsightsSection() {
 }
 export function ContactSection() {
   return (
-    <section id="contact" className="section-pad bg-zinc-950 text-white">
+    <section id="contact" className="section-pad bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-white">
       <div className="shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
         <div>
           <p className="eyebrow">Start a project</p>
-          <h2 className="mt-3 font-display text-5xl font-bold">
-            Let&apos;s Build Something
-          </h2>
-          <p className="mt-5 text-zinc-400">
+          <KineticHeading
+            lines={[
+              { text: "Ready to" },
+              { text: "stand out?", italic: true, gradient: true },
+            ]}
+            className="mt-3 h-bram-title text-4xl sm:text-6xl"
+          />
+          <p className="mt-5 text-zinc-600 font-neue text-base dark:text-zinc-400">
             Have a product to build, an existing system to improve, or a
             technical problem to solve? Tell us about it and we&apos;ll get back
             to you.
           </p>
           <dl className="mt-9 text-sm">
             <dt className="text-zinc-500">Business email</dt>
-            <dd>[COMPANY EMAIL]</dd>
+            <dd>yusrasoftwares@gmail.com</dd>
             <dt className="mt-5 text-zinc-500">Profiles</dt>
             <dd>Facebook · LinkedIn · GitHub — URLs pending</dd>
           </dl>
         </div>
         <form
-          className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 sm:p-8"
+          className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"
           aria-describedby="form-note"
         >
           <div className="grid gap-5 sm:grid-cols-2">
@@ -533,7 +597,7 @@ export function ContactSection() {
                   name={name}
                   autoComplete={auto}
                   type={name === "email" ? "email" : "text"}
-                  className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"
+                  className="mt-2 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-950"
                 />
               </label>
             ))}
@@ -543,7 +607,7 @@ export function ContactSection() {
                 required
                 name="service"
                 defaultValue=""
-                className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"
+                className="mt-2 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-950"
               >
                 <option value="">Select a service</option>
                 {[
@@ -565,7 +629,7 @@ export function ContactSection() {
                 required
                 name="details"
                 rows={5}
-                className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3"
+                className="mt-2 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-950"
               />
             </label>
           </div>

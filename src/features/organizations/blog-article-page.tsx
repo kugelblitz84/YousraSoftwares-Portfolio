@@ -23,7 +23,7 @@ export function BlogArticlePage() {
         </div>
       </article>
       <section className="section-pad border-y border-zinc-200 dark:border-zinc-800"><div className="shell"><p className="eyebrow">Related insights</p><div className="mt-8 grid gap-5 sm:grid-cols-2"><Link className="card p-7" href="/blog"><h2 className="text-xl font-bold">From business problem to product scope</h2><span className="mt-5 inline-flex items-center gap-1.5 text-accent">Read Insight <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></span></Link><Link className="card p-7" href="/blog"><h2 className="text-xl font-bold">Where AI integration creates real value</h2><span className="mt-5 inline-flex items-center gap-1.5 text-accent">Read Insight <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></span></Link></div></div></section>
-      <section className="section-pad bg-zinc-950 text-center text-white"><p className="eyebrow">Have a product challenge we can help solve?</p><Link href="/#contact" className="btn-primary mt-6 inline-flex items-center gap-1.5 rounded-full px-7 py-3.5">Start a Project <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></Link></section>
+      <section className="section-pad bg-zinc-950 text-white"><div className="shell"><p className="eyebrow">Have a product challenge we can help solve?</p><Link href="/#contact" className="btn-primary mt-6 inline-flex items-center gap-1.5 rounded-full px-7 py-3.5">Start a Project <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></Link></div></section>
     </main>
   );
 }
