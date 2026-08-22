@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import type { NavSection } from "@/types";
@@ -83,8 +84,8 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
                 className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
               />}
             </span>
-            <Link href="/#contact" className="btn-primary hidden rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project →</Link>
-            <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation">☰</button>
+            <Link href="/#contact" className="btn-primary hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></Link>
+            <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation"><RiMenuLine size={20} aria-hidden="true" /></button>
           </div>
         </nav>
         {mobileMenu && (

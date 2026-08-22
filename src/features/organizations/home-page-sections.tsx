@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RiArrowRightLine, RiArrowRightUpLine } from "@remixicon/react";
 import { Reveal } from "@/components/ui/reveal";
 
 const services = [
@@ -167,7 +168,7 @@ export function HeroSection() {
                   className="absolute top-0 right-0 grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-zinc-200 text-sky-500 transition-colors group-hover:border-sky-300 group-hover:bg-sky-50 dark:border-zinc-700 dark:group-hover:border-sky-800 dark:group-hover:bg-sky-950/40"
                   aria-hidden="true"
                 >
-                  ↗
+                  <RiArrowRightUpLine size={18} aria-hidden="true" />
                 </span>
               </div>
             </div>
@@ -309,8 +310,8 @@ export function WorkSection() {
             of our team.
           </p>
         </div>
-        <Link href="/projects" className="text-accent">
-          Explore Projects →
+        <Link href="/projects" className="inline-flex items-center gap-1.5 text-accent">
+          Explore Projects <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
         </Link>
       </div>
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
@@ -328,8 +329,8 @@ export function WorkSection() {
               <p className="mt-3 text-zinc-500">
                 Add the verified problem and solution.
               </p>
-              <Link href="/case-study" className="mt-6 inline-flex text-accent">
-                View Case Study →
+              <Link href="/case-study" className="mt-6 inline-flex items-center gap-1.5 text-accent">
+                View Case Study <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
               </Link>
             </div>
           </article>
@@ -452,7 +453,7 @@ export function InsightsSection() {
           <Link href="/blog-article" key={title} className="card p-7">
             <p className="eyebrow">{type}</p>
             <h3 className="mt-5 text-xl font-bold">{title}</h3>
-            <span className="mt-7 inline-flex text-accent">Read Insight →</span>
+            <span className="mt-7 inline-flex items-center gap-1.5 text-accent">Read Insight <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></span>
           </Link>
         ))}
       </div>
@@ -538,9 +539,9 @@ export function ContactSection() {
           </div>
           <button
             disabled
-            className="mt-6 cursor-not-allowed rounded-full bg-zinc-700 px-6 py-3 text-sm text-zinc-400"
+            className="mt-6 inline-flex cursor-not-allowed items-center gap-1.5 rounded-full bg-zinc-700 px-6 py-3 text-sm text-zinc-400"
           >
-            Send Project Details →
+            Send Project Details <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
           </button>
           <p id="form-note" className="mt-3 text-xs text-zinc-500">
             Submission is disabled until a verified business email or form

@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 
 export function BlogArticlePage() {
   return (
     <main id="main">
       <article>
         <header className="section-pad shell max-w-4xl pt-36 sm:pt-44">
-          <Link href="/blog" className="text-sm text-accent">← All insights</Link>
+          <Link href="/blog" className="inline-flex items-center gap-1.5 text-sm text-accent"><RiArrowLeftLine className="shrink-0" size={18} aria-hidden="true" /> All insights</Link>
           <p className="eyebrow mt-10">Engineering</p>
           <h1 className="balance mt-5 font-display text-5xl font-bold sm:text-7xl">Building software that is ready to evolve</h1>
           <p className="mt-6 text-xl text-zinc-500">A practical way to make sound architecture decisions without over-engineering the first release.</p>
@@ -21,8 +22,8 @@ export function BlogArticlePage() {
           <h2>The practical takeaway</h2><p>The strongest foundation is one the current team can understand and operate. Build the smallest coherent system that serves today&apos;s product, then evolve it with evidence from users and production.</p>
         </div>
       </article>
-      <section className="section-pad border-y border-zinc-200 dark:border-zinc-800"><div className="shell"><p className="eyebrow">Related insights</p><div className="mt-8 grid gap-5 sm:grid-cols-2"><Link className="card p-7" href="/blog"><h2 className="text-xl font-bold">From business problem to product scope</h2><span className="mt-5 inline-flex text-accent">Read Insight →</span></Link><Link className="card p-7" href="/blog"><h2 className="text-xl font-bold">Where AI integration creates real value</h2><span className="mt-5 inline-flex text-accent">Read Insight →</span></Link></div></div></section>
-      <section className="section-pad bg-zinc-950 text-center text-white"><p className="eyebrow">Have a product challenge we can help solve?</p><Link href="/#contact" className="btn-primary mt-6 inline-flex rounded-full px-7 py-3.5">Start a Project →</Link></section>
+      <section className="section-pad border-y border-zinc-200 dark:border-zinc-800"><div className="shell"><p className="eyebrow">Related insights</p><div className="mt-8 grid gap-5 sm:grid-cols-2"><Link className="card p-7" href="/blog"><h2 className="text-xl font-bold">From business problem to product scope</h2><span className="mt-5 inline-flex items-center gap-1.5 text-accent">Read Insight <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></span></Link><Link className="card p-7" href="/blog"><h2 className="text-xl font-bold">Where AI integration creates real value</h2><span className="mt-5 inline-flex items-center gap-1.5 text-accent">Read Insight <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></span></Link></div></div></section>
+      <section className="section-pad bg-zinc-950 text-center text-white"><p className="eyebrow">Have a product challenge we can help solve?</p><Link href="/#contact" className="btn-primary mt-6 inline-flex items-center gap-1.5 rounded-full px-7 py-3.5">Start a Project <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></Link></section>
     </main>
   );
 }
