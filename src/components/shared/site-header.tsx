@@ -7,6 +7,7 @@ import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import type { NavSection } from "@/types";
+import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
 export function SiteHeader({ active = "home" }: { active?: NavSection }) {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -61,12 +62,20 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
         <nav className="shell flex h-20 items-center justify-between" aria-label="Primary navigation">
           <Link href="/#hero" className="flex items-center gap-3" aria-label="YusraSoftwares home">
             <Image src="/assets/logos/yusrasoftwares-mark.svg" width={40} height={40} alt="" priority />
-            <b className="font-display text-xl">Yusra<span className="text-accent">Softwares</span></b>
+            <b className="font-neue text-xl tracking-tight font-medium">Yusra<span className="text-accent font-semibold">Softwares</span></b>
           </Link>
           <ul className="hidden items-center gap-7 text-sm lg:flex">
             {siteConfig.nav.map((item) => (
               <li key={item.label}>
-                <Link className={isCurrent(item.label) ? "nav-link text-accent" : "nav-link text-zinc-500"} href={item.href} aria-current={isCurrent(item.label) ? "page" : undefined}>{item.label}</Link>
+                <Link
+                  className={`group nav-link inline-flex items-center ${
+                    isCurrent(item.label) ? "text-accent font-medium" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+                  }`}
+                  href={item.href}
+                  aria-current={isCurrent(item.label) ? "page" : undefined}
+                >
+                  <TextHoverRoll text={item.label} />
+                </Link>
               </li>
             ))}
           </ul>
@@ -84,7 +93,10 @@ export function SiteHeader({ active = "home" }: { active?: NavSection }) {
                 className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
               />}
             </span>
-            <Link href="/#contact" className="btn-primary hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></Link>
+            <Link href="/#contact" className="group btn-primary hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">
+              <TextHoverRoll text="Start a Project" />
+              <RiArrowRightLine className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" size={18} aria-hidden="true" />
+            </Link>
             <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation"><RiMenuLine size={20} aria-hidden="true" /></button>
           </div>
         </nav>
