@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 
 const facts = [
   ["Project Type", "[PROJECT TYPE]"], ["Industry", "[INDUSTRY]"], ["Our Contribution", "[CONTRIBUTION]"],
@@ -11,7 +12,7 @@ export function CaseStudyPage() {
     <main id="main">
       <article>
         <header className="section-pad shell pt-36 sm:pt-44">
-          <Link href="/projects" className="text-sm text-accent">← All projects</Link>
+          <Link href="/projects" className="inline-flex items-center gap-1.5 text-sm text-accent"><RiArrowLeftLine className="shrink-0" size={18} aria-hidden="true" /> All projects</Link>
           <p className="eyebrow mt-10">[PROJECT CATEGORY]</p>
           <div className="mt-4 flex flex-wrap gap-2"><span className="tag">[TECHNOLOGY]</span><span className="tag">[TECHNOLOGY]</span></div>
           <h1 className="balance mt-6 font-display text-5xl font-bold sm:text-7xl">[PROJECT NAME]</h1>
@@ -32,7 +33,7 @@ export function CaseStudyPage() {
           <h2>Project Gallery</h2><div className="grid gap-5 sm:grid-cols-2"><Image src="/assets/projects/project-placeholder.svg" width={1200} height={760} alt="Project gallery placeholder one" /><Image src="/assets/projects/project-placeholder.svg" width={1200} height={760} alt="Project gallery placeholder two" /></div>
         </div>
       </article>
-      <section className="section-pad bg-zinc-950 text-center text-white"><p className="eyebrow">Have a similar project in mind?</p><h2 className="mt-4 font-display text-4xl font-bold">Let&apos;s talk about what you&apos;re building.</h2><Link href="/#contact" className="btn-primary mt-7 inline-flex rounded-full px-7 py-3.5">Start a Project →</Link></section>
+      <section className="section-pad bg-zinc-950 text-center text-white"><p className="eyebrow">Have a similar project in mind?</p><h2 className="mt-4 font-display text-4xl font-bold">Let&apos;s talk about what you&apos;re building.</h2><Link href="/#contact" className="btn-primary mt-7 inline-flex items-center gap-1.5 rounded-full px-7 py-3.5">Start a Project <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></Link></section>
     </main>
   );
 }
