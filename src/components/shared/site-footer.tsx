@@ -1,25 +1,77 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RiArrowUpLine } from "@remixicon/react";
 import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950 py-10 text-white">
-      <div className="shell flex flex-col gap-7 lg:flex-row lg:justify-between">
-        <div>
-          <Link href="/#hero" className="flex items-center gap-3">
-            <Image src="/assets/logos/yusrasoftwares-mark.svg" width={38} height={38} alt="" />
-            <b>{siteConfig.name}</b>
-          </Link>
-          <p className="mt-3 text-sm text-zinc-500">{siteConfig.description}</p>
+    <footer className="relative overflow-hidden border-t border-zinc-800 bg-zinc-950 text-white">
+      <div className="soft-grid absolute inset-x-0 top-0 h-72 opacity-40" />
+      <div className="shell relative py-8 sm:py-10">
+        <div className="grid gap-12 py-12 sm:grid-cols-4">
+          <div className="sm:col-span-2">
+            <Link
+              href="/#hero"
+              className="inline-flex items-center gap-3"
+              aria-label="YusraSoftwares home"
+            >
+              <Image
+                src="/assets/logos/yusrasoftwares-mark.svg"
+                width={42}
+                height={42}
+                alt=""
+              />
+              <span className="font-display text-xl font-bold">
+                Yusra<span className="text-accent">Softwares</span>
+              </span>
+            </Link>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-zinc-500">
+              {siteConfig.description} Thoughtful products, dependable
+              engineering, and a team built for the full journey.
+            </p>
+          </div>
+          <nav aria-label="Footer navigation">
+            <p className="text-xs font-bold tracking-[.18em] text-zinc-500 uppercase">
+              Explore
+            </p>
+            <div className="mt-5 grid gap-3 text-sm text-zinc-300">
+              {siteConfig.nav.slice(1).map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="w-fit transition-colors hover:text-cyan-300"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
+          <div>
+            <p className="text-xs font-bold tracking-[.18em] text-zinc-500 uppercase">
+              Contact
+            </p>
+            <div className="mt-5 grid gap-3 text-sm text-zinc-300">
+              <span className="text-zinc-500">Business email</span>
+              <span>[COMPANY EMAIL]</span>
+              <span className="mt-2 text-zinc-500">Profiles coming soon</span>
+            </div>
+          </div>
         </div>
-        <nav className="flex flex-wrap gap-5 text-sm text-zinc-400" aria-label="Footer navigation">
-          {siteConfig.nav.slice(1).map((item) => <Link key={item.label} href={item.href}>{item.label}</Link>)}
-        </nav>
-      </div>
-      <div className="shell mt-8 border-t border-zinc-800 pt-6 text-xs text-zinc-600">
-        © {new Date().getFullYear()} YusraSoftwares. All rights reserved.<br />
-        Template by <a className="underline" href="https://lbegey78.gumroad.com/" target="_blank" rel="noopener noreferrer">Laurent Begey</a> · Distributed by <a className="underline" href="https://themewagon.com/" target="_blank" rel="noopener noreferrer">ThemeWagon</a>
+        <div className="flex flex-col gap-4 border-t border-zinc-800 pt-6 text-xs text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            Copyright {new Date().getFullYear()} YusraSoftwares. All rights
+            reserved.
+          </p>
+          <a
+            href="#hero"
+            className="inline-flex w-fit items-center gap-2 text-zinc-400 transition-colors hover:text-white"
+          >
+            Back to top{" "}
+            <span className="grid h-7 w-7 place-items-center rounded-full border border-zinc-700">
+              <RiArrowUpLine size={15} aria-hidden="true" />
+            </span>
+          </a>
+        </div>
       </div>
     </footer>
   );

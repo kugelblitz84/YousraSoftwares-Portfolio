@@ -204,7 +204,20 @@ export function ServicesSection() {
   );
 }
 
-const projectTypes = ["Web Platform", "Mobile Application", "AI Product"];
+const selectedWorks = [
+  {
+    projectType: "Design",
+    projectName: "UI/UX",
+  },
+  {
+    projectType: "Web Platform",
+    projectName: "Web Application",
+  },
+  {
+    projectType: "Mobile Platform",
+    projectName: "Mobile Application",
+  },
+];
 const capabilities = [
   ["WEB", "Next.js · React · Tailwind CSS"],
   ["BACKEND", "NestJS · Node.js · REST APIs"],
@@ -301,36 +314,48 @@ export function WorkSection() {
     <section id="work" className="section-pad shell">
       <div className="flex flex-wrap items-end justify-between gap-5">
         <div>
-          <p className="eyebrow">Our work</p>
+          <p className="eyebrow">Our works</p>
           <h2 className="mt-3 font-display text-5xl font-bold">
-            Selected Work
+            Selected Works
           </h2>
           <p className="mt-4 max-w-2xl text-zinc-500">
             A selection of products, platforms, and experiences built by members
             of our team.
           </p>
         </div>
-        <Link href="/projects" className="inline-flex items-center gap-1.5 text-accent">
-          Explore Projects <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-1.5 text-accent"
+        >
+          Explore Projects{" "}
+          <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
         </Link>
       </div>
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
-        {projectTypes.map((type) => (
-          <article key={type} className="card overflow-hidden">
+        {selectedWorks.map((work) => (
+          <article key={work.projectName} className="card overflow-hidden">
             <Image
               src="/assets/projects/project-placeholder.svg"
               width={1200}
               height={760}
-              alt={type + " project placeholder"}
+              alt={work.projectType + " project placeholder"}
             />
             <div className="p-6">
-              <p className="eyebrow">{type} · Project slot</p>
-              <h3 className="mt-2 text-2xl font-bold">[PROJECT NAME]</h3>
+              <p className="eyebrow">{work.projectType} · Project slot</p>
+              <h3 className="mt-2 text-2xl font-bold">{work.projectName}</h3>
               <p className="mt-3 text-zinc-500">
                 Add the verified problem and solution.
               </p>
-              <Link href="/case-study" className="mt-6 inline-flex items-center gap-1.5 text-accent">
-                View Case Study <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
+              <Link
+                href="/case-study"
+                className="mt-6 inline-flex items-center gap-1.5 text-accent"
+              >
+                View Case Study{" "}
+                <RiArrowRightLine
+                  className="shrink-0"
+                  size={18}
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </article>
@@ -453,7 +478,14 @@ export function InsightsSection() {
           <Link href="/blog-article" key={title} className="card p-7">
             <p className="eyebrow">{type}</p>
             <h3 className="mt-5 text-xl font-bold">{title}</h3>
-            <span className="mt-7 inline-flex items-center gap-1.5 text-accent">Read Insight <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" /></span>
+            <span className="mt-7 inline-flex items-center gap-1.5 text-accent">
+              Read Insight{" "}
+              <RiArrowRightLine
+                className="shrink-0"
+                size={18}
+                aria-hidden="true"
+              />
+            </span>
           </Link>
         ))}
       </div>
@@ -541,7 +573,12 @@ export function ContactSection() {
             disabled
             className="mt-6 inline-flex cursor-not-allowed items-center gap-1.5 rounded-full bg-zinc-700 px-6 py-3 text-sm text-zinc-400"
           >
-            Send Project Details <RiArrowRightLine className="shrink-0" size={18} aria-hidden="true" />
+            Send Project Details{" "}
+            <RiArrowRightLine
+              className="shrink-0"
+              size={18}
+              aria-hidden="true"
+            />
           </button>
           <p id="form-note" className="mt-3 text-xs text-zinc-500">
             Submission is disabled until a verified business email or form
