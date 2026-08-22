@@ -51,8 +51,7 @@ export function SiteFooter() {
               Contact
             </p>
             <div className="mt-5 grid gap-3 text-sm text-zinc-300">
-              <span className="text-zinc-500">Business email</span>
-              <span>[COMPANY EMAIL]</span>
+              <span>yusrasoftwares@gmail.com</span>
               <span className="mt-2 text-zinc-500">Profiles coming soon</span>
             </div>
           </div>

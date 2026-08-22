@@ -218,13 +218,6 @@ const selectedWorks = [
     projectName: "Mobile Application",
   },
 ];
-const capabilities = [
-  ["WEB", "Next.js · React · Tailwind CSS"],
-  ["BACKEND", "NestJS · Node.js · REST APIs"],
-  ["MOBILE", "Flutter · Dart"],
-  ["DESIGN", "Figma · Prototyping"],
-  ["AI", "LLM Integration · AI APIs · RAG"],
-];
 const insights = [
   ["Engineering", "Building software that is ready to evolve"],
   ["Product", "From business problem to product scope"],
@@ -366,15 +359,17 @@ export function WorkSection() {
 }
 export function AboutSection() {
   return (
-    <section id="about" className="section-pad bg-zinc-950 text-white">
-      <div className="shell grid gap-10 lg:grid-cols-2">
-        <div>
-          <p className="eyebrow">About us</p>
-          <h2 className="mt-3 font-display text-5xl font-bold">
-            A small team built to create serious products.
-          </h2>
-        </div>
-        <div className="space-y-5 text-zinc-400">
+    <section id="about" className="relative overflow-hidden bg-zinc-950 text-white">
+      <div className="soft-grid absolute inset-0 opacity-30" />
+      <div className="absolute top-1/2 left-0 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-500/10 blur-3xl" />
+      <div className="section-pad shell relative">
+        <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28">
+            <div className="flex items-center gap-3"><span className="h-px w-10 bg-cyan-300" /><p className="eyebrow">About us</p></div>
+            <h2 className="balance mt-6 max-w-lg font-display text-5xl leading-[.98] font-bold tracking-tight sm:text-6xl">A small team built to create <span className="text-gradient">serious products.</span></h2>
+          </div>
+          <div>
+            <div className="space-y-6 border-l border-white/10 pl-6 text-base leading-8 text-zinc-400 sm:pl-10 sm:text-lg">
           <p>
             YusraSoftwares is a software development studio focused on turning
             business ideas into reliable digital products. Our team brings
@@ -391,16 +386,9 @@ export function AboutSection() {
             engineering, clear communication, and technology selected for the
             problem rather than for hype.
           </p>
-        </div>
-      </div>
-      <div className="shell mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        {capabilities.map(([name, tech]) => (
-          <div key={name} className="rounded-2xl border border-zinc-800 p-5">
-            {name}
-            <br />
-            <small>{tech}</small>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
