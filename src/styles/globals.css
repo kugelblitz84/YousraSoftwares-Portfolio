@@ -39,6 +39,21 @@ body { font-family: "DM Sans", sans-serif; }
 .device { border: 1px solid rgba(161,161,170,.35); background: rgba(255,255,255,.88); box-shadow: 0 25px 70px rgba(9,9,11,.15); backdrop-filter: blur(12px); }
 .dark .device { background: rgba(24,24,27,.92); box-shadow: 0 25px 80px rgba(0,0,0,.45); }
 .project-visual { background: radial-gradient(circle at 78% 18%, rgba(34,211,238,.35), transparent 35%), linear-gradient(145deg, #071527, #0b2946 55%, #0d749f); }
+.project-list-tile { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(260px, 1fr) minmax(190px, .5fr); gap: clamp(1rem, 2vw, 2rem); align-items: center; min-height: 248px; padding-block: 1.25rem; border-bottom: 1px solid rgb(228 228 231); transition: border-color .2s ease; }
+.dark .project-list-tile { border-color: rgb(39 39 42); }
+.project-list-tile:hover { border-color: rgba(14,165,233,.4); }
+.project-list-tile--no-gallery { grid-template-columns: minmax(220px, .58fr) minmax(320px, 1.42fr); }
+.project-primary-link { display: contents; }
+.project-cover { position: relative; aspect-ratio: 16 / 10; min-height: 0; overflow: hidden; border: 1px solid rgba(161,161,170,.18); border-radius: 1.15rem; background: rgb(9 9 11); box-shadow: 0 10px 28px rgba(9,9,11,.1); }
+.project-copy { align-self: center; }
+.project-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; align-content: center; padding-block: .25rem; }
+.project-gallery-thumb { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid rgb(228 228 231); border-radius: .8rem; background: rgb(244 244 245); box-shadow: 0 4px 12px rgba(9,9,11,.06); transition: transform .22s cubic-bezier(.2,.8,.2,1), border-color .2s ease, box-shadow .22s ease; }
+.project-gallery-thumb:first-child:nth-last-child(odd) { grid-column: 1 / -1; aspect-ratio: 16 / 7; }
+.project-gallery-thumb:only-child { width: min(100%, 10.5rem); aspect-ratio: 4 / 3; justify-self: end; }
+.project-gallery-thumb:hover, .project-gallery-thumb:focus-visible { z-index: 1; border-color: rgba(14,165,233,.65); box-shadow: 0 12px 28px rgba(2,132,199,.18); transform: translateY(-4px) scale(1.02); }
+.project-gallery-thumb:nth-child(even):hover, .project-gallery-thumb:nth-child(even):focus-visible { transform: translateY(-4px) rotate(-.5deg) scale(1.02); }
+.project-gallery-thumb span { position: absolute; right: .5rem; bottom: .5rem; border-radius: 999px; background: rgba(9,9,11,.68); padding: .2rem .45rem; color: white; font-size: .6rem; letter-spacing: .1em; backdrop-filter: blur(8px); }
+.dark .project-gallery-thumb { border-color: rgb(63 63 70); background: rgb(24 24 27); }
 .placeholder-grid { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 24px 24px; }
 .prose-company h2 { margin-top: 3rem; margin-bottom: 1rem; font-family: "PT Sans", sans-serif; font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; color: rgb(24 24 27); }
 .dark .prose-company h2 { color: white; }
@@ -51,3 +66,5 @@ body { font-family: "DM Sans", sans-serif; }
 .skip-link:focus { top: 1rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 @media (max-width: 639px) { .shell { width: min(100% - 1.25rem, 1180px); } .product-stage { min-height: 350px; } }
+@media (max-width: 1023px) { .project-list-tile, .project-list-tile:hover, .project-list-tile--no-gallery { grid-template-columns: minmax(160px, .5fr) minmax(0, 1fr); gap: 1rem 1.5rem; padding-block: 1.25rem; } .project-cover { grid-column: 1; grid-row: 1 / span 2; align-self: stretch; aspect-ratio: auto; min-height: 190px; } .project-copy { grid-column: 2; grid-row: 1; } .project-gallery { grid-column: 2; grid-row: 2; display: flex; gap: .55rem; overflow-x: auto; padding: .25rem .25rem .6rem; scrollbar-width: thin; } .project-gallery-thumb, .project-gallery-thumb:first-child:nth-last-child(odd), .project-gallery-thumb:only-child { flex: 0 0 6.75rem; width: auto; aspect-ratio: 4 / 3; } }
+@media (max-width: 639px) { .project-list-tile, .project-list-tile:hover, .project-list-tile--no-gallery { grid-template-columns: 1fr; gap: 1rem; padding-block: 1.25rem; } .project-cover { grid-column: 1; grid-row: auto; aspect-ratio: 16 / 10; min-height: 0; } .project-copy { grid-column: 1; grid-row: auto; } .project-gallery { grid-column: 1; grid-row: auto; margin-top: 0; } }

@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="shell flex flex-col gap-7 lg:flex-row lg:justify-between">
         <div>
           <Link href="/#hero" className="flex items-center gap-3">
-            <Image src="/assets/logos/yusrasoftwares-mark.svg" width={38} height={38} alt="" />
+            <Image src="/assets/logos/yousrasoftware_logo.png" width={38} height={38} alt="" />
             <b>{siteConfig.name}</b>
           </Link>
           <p className="mt-3 text-sm text-zinc-500">{siteConfig.description}</p>

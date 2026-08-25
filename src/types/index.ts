@@ -1,2 +1,2 @@
-export type NavSection = "home" | "work" | "insights";
-export type ProjectCategory = "all" | "web" | "mobile" | "ai" | "uiux";
+export type NavSection = "home" | "services" | "work" | "about" | "contact";
+export type ProjectCategory = "web" | "mobile" | "ui-ux";

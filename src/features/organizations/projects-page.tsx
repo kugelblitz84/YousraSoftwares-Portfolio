@@ -1,34 +1,84 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { ProjectGallery } from "./project-gallery";
+import { getProjectCollection, projectCollections } from "./project-data";
 import type { ProjectCategory } from "@/types";
 
-const filters: Array<[ProjectCategory, string]> = [["all","All"],["web","Web"],["mobile","Mobile"],["ai","Ai"],["uiux","UI/UX"]];
-const projects = [
-  { id: 1, category: "web", type: "Web Platform" },
-  { id: 2, category: "mobile", type: "Mobile Application" },
-  { id: 3, category: "ai", type: "AI Product" },
-] as const;
+export function ProjectsPage({ category }: { category: ProjectCategory }) {
+  const collection = getProjectCollection(category);
 
-export function ProjectsPage() {
-  const [active, setActive] = useState<ProjectCategory>("all");
-  const visible = active === "all" ? projects : projects.filter((project) => project.category === active);
+  if (!collection) return null;
+
   return (
     <main id="main">
       <section className="section-pad shell pt-36 sm:pt-44">
-        <p className="eyebrow">Our work</p><h1 className="balance mt-4 font-display text-5xl font-bold sm:text-7xl">Projects & Case Studies</h1>
-        <p className="mt-6 max-w-2xl text-lg text-zinc-500">Explore digital products, platforms, mobile applications, and technical solutions built by our team.</p>
-        <div className="mt-10 flex flex-wrap gap-2" aria-label="Project filters">
-          {filters.map(([value,label]) => <button key={value} onClick={() => setActive(value)} aria-pressed={active === value} className={"rounded-full border px-4 py-2 text-sm " + (active === value ? "border-sky-500 bg-sky-500 text-white" : "border-zinc-200 dark:border-zinc-700")}>{label}</button>)}
+        <Link href="/#work" className="inline-flex items-center gap-2 text-sm text-zinc-500 transition hover:text-sky-600 dark:text-zinc-400 dark:hover:text-sky-400">
+          <span aria-hidden="true">←</span> All project categories
+        </Link>
+        <p className="eyebrow mt-10">Selected work · {collection.number}</p>
+        <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_.7fr] lg:items-end">
+          <h1 className="balance font-display text-5xl font-bold sm:text-7xl">{collection.label}</h1>
+          <p className="max-w-xl text-lg leading-relaxed text-zinc-500 dark:text-zinc-400">{collection.description}</p>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {visible.map((project) => <article key={project.id} className="card overflow-hidden"><Link href="/case-study"><Image src="/assets/projects/project-placeholder.svg" width={1200} height={760} alt="Project screenshot placeholder" /></Link><div className="p-6"><p className="eyebrow">{project.type}</p><h2 className="mt-3 text-2xl font-bold">[PROJECT NAME]</h2><p className="mt-3 text-sm text-zinc-500">Add a verified project summary describing the problem and delivered solution.</p><p className="mt-5 text-xs text-zinc-400">Built by members of the YusraSoftwares team</p><Link href="/case-study" className="mt-6 inline-flex text-accent">View Case Study →</Link></div></article>)}
+
+        <nav className="mt-12 flex flex-wrap gap-2" aria-label="Project categories">
+          {projectCollections.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/projects/${item.slug}`}
+              aria-current={item.slug === category ? "page" : undefined}
+              className={
+                "rounded-full border px-5 py-2.5 text-sm transition " +
+                (item.slug === category
+                  ? "border-sky-500 bg-sky-500 text-white shadow-lg shadow-sky-500/20"
+                  : "border-zinc-200 text-zinc-500 hover:border-sky-400 hover:text-sky-600 dark:border-zinc-700 dark:hover:border-sky-600 dark:hover:text-sky-400")
+              }
+            >
+              {item.shortLabel}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="mt-12 border-t border-zinc-200 dark:border-zinc-800">
+          {collection.projects.map((project, index) => (
+            <article key={project.id} className={`project-list-tile group${project.gallery.length === 0 ? " project-list-tile--no-gallery" : ""}`}>
+              <Link href={project.detailHref} className="project-primary-link" aria-label={`View ${project.name} case study`}>
+                <div className="project-cover">
+                  <Image
+                    src={project.cover}
+                    width={1200}
+                    height={760}
+                    alt={`${project.name} project preview`}
+                    className="h-full w-full object-cover"
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
+                  <span className="absolute top-3 left-3 rounded-full border border-white/15 bg-zinc-950/55 px-2.5 py-1 text-[.6rem] tracking-[.14em] text-white/90 uppercase backdrop-blur-md">
+                    Project cover
+                  </span>
+                </div>
+                <div className="project-copy">
+                  <p className="eyebrow">{String(index + 1).padStart(2, "0")} · {collection.shortLabel}</p>
+                  <h2 className="mt-2 font-display text-2xl font-bold transition-colors duration-200 group-hover:text-sky-500 sm:text-3xl">{project.name}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{project.description}</p>
+                  <p className="mt-4 text-[.68rem] tracking-[.12em] text-zinc-400 uppercase">{project.services}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-sky-600 dark:text-sky-400">
+                    View case study <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </Link>
+              <ProjectGallery images={project.gallery} projectName={project.name} />
+            </article>
+          ))}
         </div>
-        {visible.length === 0 && <div className="mt-12 rounded-3xl border border-dashed border-zinc-300 p-10 text-center dark:border-zinc-700"><h2 className="text-xl font-bold">No verified projects in this category yet.</h2><p className="mt-2 text-zinc-500">This filter is ready for future case studies.</p></div>}
       </section>
-      <section className="section-pad bg-zinc-950 text-center text-white"><div className="shell"><p className="eyebrow">Your product could be next</p><h2 className="mt-4 font-display text-4xl font-bold">Have a product challenge to solve?</h2><Link href="/#contact" className="btn-primary mt-7 inline-flex rounded-full px-7 py-3.5">Start a Project →</Link></div></section>
+
+      <section className="section-pad bg-zinc-950 text-center text-white">
+        <div className="shell">
+          <p className="eyebrow">Your product could be next</p>
+          <h2 className="mt-4 font-display text-4xl font-bold">Have a product challenge to solve?</h2>
+          <Link href="/#contact" className="btn-primary mt-7 inline-flex rounded-full px-7 py-3.5">Start a Project →</Link>
+        </div>
+      </section>
     </main>
   );
 }
