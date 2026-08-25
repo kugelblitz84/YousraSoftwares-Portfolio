@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "YusraSoftwares",
-  description: "Designing and engineering digital products for modern businesses.",
+  description:
+    "Designing and engineering digital products for modern businesses.",
   nav: [
     { label: "Home", href: "/#hero", section: "home" },
     { label: "Services", href: "/#services", section: "services" },

@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <><SiteHeader active="work" /><CaseStudyPage /><SiteFooter /></>;
+  return <><SiteHeader /><CaseStudyPage /><SiteFooter /></>;
 }

@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
-import type { NavSection } from "@/types";
+import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
 type SiteHeaderProps = {
   active?: NavSection | null;
@@ -25,10 +27,14 @@ export function SiteHeader({ active }: SiteHeaderProps) {
       setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
+    const updateHash = () => setHash(window.location.hash);
+    updateHash();
     window.addEventListener("keydown", close);
+    window.addEventListener("hashchange", updateHash);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("keydown", close);
+      window.removeEventListener("hashchange", updateHash);
     };
   }, []);
 

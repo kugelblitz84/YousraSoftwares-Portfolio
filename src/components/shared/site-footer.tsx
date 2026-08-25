@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { RiArrowUpLine } from "@remixicon/react";
 import { siteConfig } from "@/config/site";
+import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
 export function SiteFooter() {
   return (
@@ -13,13 +15,21 @@ export function SiteFooter() {
           </Link>
           <p className="mt-3 text-sm text-zinc-500">{siteConfig.description}</p>
         </div>
-        <nav className="flex flex-wrap gap-5 text-sm text-zinc-400" aria-label="Footer navigation">
-          {siteConfig.nav.slice(1).map((item) => <Link key={item.label} href={item.href}>{item.label}</Link>)}
-        </nav>
-      </div>
-      <div className="shell mt-8 border-t border-zinc-800 pt-6 text-xs text-zinc-600">
-        © {new Date().getFullYear()} YusraSoftwares. All rights reserved.<br />
-        Template by <a className="underline" href="https://lbegey78.gumroad.com/" target="_blank" rel="noopener noreferrer">Laurent Begey</a> · Distributed by <a className="underline" href="https://themewagon.com/" target="_blank" rel="noopener noreferrer">ThemeWagon</a>
+        <div className="flex flex-col gap-4 border-t border-zinc-200 pt-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 dark:text-zinc-600">
+          <p className="font-neue">
+            Copyright {new Date().getFullYear()} YusraSoftwares. All rights
+            reserved.
+          </p>
+          <a
+            href="#hero"
+            className="group inline-flex w-fit items-center gap-2 text-zinc-600 font-neue transition-colors hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+          >
+            <TextHoverRoll text="Back to top" />
+            <span className="grid h-7 w-7 place-items-center rounded-full border border-zinc-300 transition-transform duration-300 group-hover:-translate-y-1 dark:border-zinc-700">
+              <RiArrowUpLine size={15} aria-hidden="true" />
+            </span>
+          </a>
+        </div>
       </div>
     </footer>
   );

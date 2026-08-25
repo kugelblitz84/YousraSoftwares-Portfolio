@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ProjectGallery } from "./project-gallery";
 import { getProjectCollection, projectCollections } from "./project-data";
 import type { ProjectCategory } from "@/types";
+import { KineticHeading } from "@/components/ui/kinetic-heading";
+import { SplitTextReveal } from "@/components/ui/split-text-reveal";
+import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
 export function ProjectsPage({ category }: { category: ProjectCategory }) {
   const collection = getProjectCollection(category);
