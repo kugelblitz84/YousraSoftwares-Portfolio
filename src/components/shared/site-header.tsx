@@ -3,11 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
-import { TextHoverRoll } from "@/components/ui/text-hover-roll";
+
+type NavSection = (typeof siteConfig.nav)[number]["section"];
 
 type SiteHeaderProps = {
   active?: NavSection | null;
@@ -27,14 +26,10 @@ export function SiteHeader({ active }: SiteHeaderProps) {
       setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
-    const updateHash = () => setHash(window.location.hash);
-    updateHash();
     window.addEventListener("keydown", close);
-    window.addEventListener("hashchange", updateHash);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("keydown", close);
-      window.removeEventListener("hashchange", updateHash);
     };
   }, []);
 
@@ -123,7 +118,7 @@ export function SiteHeader({ active }: SiteHeaderProps) {
       <header className="glass fixed inset-x-0 top-0 z-50 border-b border-zinc-200/70 dark:border-zinc-800/70">
         <nav className="shell flex h-20 items-center justify-between" aria-label="Primary navigation">
           <Link href="/#hero" onClick={() => selectSection("home")} className="flex items-center gap-3" aria-label="YusraSoftwares home">
-            <Image src="/assets/logos/yousrasoftware_logo.png" width={29} height={29} alt="" priority />
+            <Image src="/assets/logos/yousrasoftware_logo.png" width={29} height={29} alt="" priority style={{ width: "auto", height: "auto" }} />
             <b className="font-display text-xl">Yusra<span className="text-accent">Softwares</span></b>
           </Link>
           <ul className="hidden items-center gap-7 text-sm lg:flex">

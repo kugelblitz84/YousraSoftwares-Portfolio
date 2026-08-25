@@ -44,7 +44,7 @@ export function HomePage() {
 
               <div className="absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl border border-sky-200/20 bg-white/5 px-3 py-2 shadow-[0_0_30px_rgba(34,211,238,0.15)] backdrop-blur-md">
                 <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-[#0b1830] ring-1 ring-sky-300/10">
-                  <Image src="/assets/logos/yousrasoftware_logo.png" alt="YusraSoftwares logo" width={36} height={36} className="object-contain" />
+                  <Image src="/assets/logos/yousrasoftware_logo.png" alt="YusraSoftwares logo" width={36} height={36} className="object-contain" style={{ width: "auto", height: "auto" }} />
                 </div>
                 <p className="text-xs font-semibold text-slate-100">From Idea to Production</p>
               </div>
