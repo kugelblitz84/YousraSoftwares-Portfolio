@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import { TextHoverRoll } from "@/components/ui/text-hover-roll";
+import type { NavSection } from "@/types";
 
 type SiteHeaderProps = {
   active?: NavSection | null;
@@ -27,14 +28,10 @@ export function SiteHeader({ active }: SiteHeaderProps) {
       setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
-    const updateHash = () => setHash(window.location.hash);
-    updateHash();
     window.addEventListener("keydown", close);
-    window.addEventListener("hashchange", updateHash);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("keydown", close);
-      window.removeEventListener("hashchange", updateHash);
     };
   }, []);
 
