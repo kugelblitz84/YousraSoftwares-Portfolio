@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
+import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
 type NavSection = (typeof siteConfig.nav)[number]["section"];
 
@@ -13,13 +15,14 @@ type SiteHeaderProps = {
 };
 
 export function SiteHeader({ active }: SiteHeaderProps) {
+  const pathname = usePathname();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
   const themeOrigin = useRef({ x: 0, y: 0 });
-  const currentSection = active === undefined ? visibleSection : active;
+  const currentSection = active === undefined ? activeSection : active;
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -101,8 +104,15 @@ export function SiteHeader({ active }: SiteHeaderProps) {
     applyTheme();
   }
 
+  function selectSection(section: NavSection) {
+    setMobileMenu(false);
+    if (active === undefined) {
+      setActiveSection(section);
+    }
+  }
+
   const isCurrent = (item: (typeof siteConfig.nav)[number]) => {
-    if (pathname === "/") return activeSection === item.section;
+    if (pathname === "/") return currentSection === item.section;
 
     const itemPath = item.href.split("#")[0];
     const isItemRoute =
@@ -137,9 +147,7 @@ export function SiteHeader({ active }: SiteHeaderProps) {
             {siteConfig.nav.map((item) => (
               <li key={item.label}>
                 <Link
-                  onClick={() => {
-                    setActiveSection(item.section);
-                  }}
+                  onClick={() => selectSection(item.section)}
                   className={`group nav-link inline-flex items-center ${
                     isCurrent(item) ? "text-accent font-medium" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                   }`}
@@ -175,10 +183,7 @@ export function SiteHeader({ active }: SiteHeaderProps) {
               {siteConfig.nav.map((item) => (
                 <li key={item.label}>
                   <Link
-                    onClick={() => {
-                      setActiveSection(item.section);
-                      setMobileMenu(false);
-                    }}
+                    onClick={() => selectSection(item.section)}
                     className={isCurrent(item) ? "font-medium text-accent" : "text-zinc-600 dark:text-zinc-300"}
                     href={item.href}
                     aria-current={isCurrent(item) ? "location" : undefined}
