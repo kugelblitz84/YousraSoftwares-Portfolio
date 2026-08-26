@@ -29,7 +29,7 @@ export function CaseStudyPage() {
             className="mt-6 h-bram-hero text-5xl sm:text-7xl"
           />
           <p className="mt-6 max-w-3xl text-xl font-neue text-zinc-500">[ONE-SENTENCE PROJECT SUMMARY]</p>
-          <Image src="/assets/projects/project-placeholder.svg" width={1200} height={760} className="mt-12 w-full rounded-3xl" alt="Placeholder for the project cover image" priority />
+          <Image src="/assets/projects/project-placeholder.svg" width={1200} height={760} className="mt-12 w-full rounded-3xl" alt="Placeholder for the project cover image" preload />
         </header>
         <section className="shell grid gap-4 border-y border-zinc-200 py-8 sm:grid-cols-2 lg:grid-cols-5 dark:border-zinc-800">{facts.map(([label,value]) => <div key={label}><p className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">{label}</p><p className="mt-2 text-sm font-neue">{value}</p></div>)}</section>
         <div className="section-pad shell prose-company max-w-4xl font-neue">

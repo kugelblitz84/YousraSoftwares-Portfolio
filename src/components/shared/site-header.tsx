@@ -3,19 +3,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
-export function SiteHeader() {
+type NavSection = (typeof siteConfig.nav)[number]["section"];
+
+type SiteHeaderProps = {
+  active?: NavSection | null;
+};
+
+export function SiteHeader({ active }: SiteHeaderProps) {
   const pathname = usePathname();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
-  const [hash, setHash] = useState("");
+  const [activeSection, setActiveSection] = useState("hero");
+  const [isScrolled, setIsScrolled] = useState(false);
   const themeOrigin = useRef({ x: 0, y: 0 });
+  const currentSection = active === undefined ? activeSection : active;
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -23,16 +30,57 @@ export function SiteHeader() {
       setThemeReady(true);
     });
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMobileMenu(false);
-    const updateHash = () => setHash(window.location.hash);
-    updateHash();
     window.addEventListener("keydown", close);
-    window.addEventListener("hashchange", updateHash);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("keydown", close);
-      window.removeEventListener("hashchange", updateHash);
     };
   }, []);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateFromScroll = () => {
+      if (frame) return;
+
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        setIsScrolled(window.scrollY > 16);
+
+        if (pathname !== "/") return;
+
+        const marker = Math.min(window.innerHeight * 0.35, 280);
+        const atPageEnd =
+          window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 2;
+        let currentSection: (typeof siteConfig.nav)[number]["section"] =
+          siteConfig.nav[0].section;
+
+        for (const item of siteConfig.nav) {
+          const section = document.getElementById(item.section);
+          if (section && section.getBoundingClientRect().top <= marker) {
+            currentSection = item.section;
+          }
+        }
+
+        if (atPageEnd) {
+          currentSection = siteConfig.nav.at(-1)?.section ?? currentSection;
+        }
+
+        setActiveSection(currentSection);
+      });
+    };
+
+    updateFromScroll();
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
+    window.addEventListener("resize", updateFromScroll);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateFromScroll);
+      window.removeEventListener("resize", updateFromScroll);
+    };
+  }, [pathname]);
 
   function toggleTheme(next: boolean) {
     const applyTheme = () => {
@@ -56,35 +104,55 @@ export function SiteHeader() {
     applyTheme();
   }
 
-  const isCurrent = (href: string) => {
-    const [itemPath, itemHash = ""] = href.split("#");
-    if (pathname !== itemPath) return false;
-    if (!itemHash) return true;
-    return hash ? hash === `#${itemHash}` : itemHash === "hero";
+  function selectSection(section: NavSection) {
+    setMobileMenu(false);
+    if (active === undefined) {
+      setActiveSection(section);
+    }
+  }
+
+  const isCurrent = (item: (typeof siteConfig.nav)[number]) => {
+    if (pathname === "/") return currentSection === item.section;
+
+    const itemPath = item.href.split("#")[0];
+    const isItemRoute =
+      itemPath !== "/" &&
+      (pathname === itemPath || pathname.startsWith(`${itemPath}/`));
+    const isCaseStudy =
+      item.section === "work" &&
+      (pathname === "/case-study" || pathname.startsWith("/case-study/"));
+
+    return isItemRoute || isCaseStudy;
   };
 
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <header className="glass fixed inset-x-0 top-0 z-50 border-b border-zinc-200/70 dark:border-zinc-800/70">
-        <nav className="shell flex h-20 items-center justify-between" aria-label="Primary navigation">
+      <header
+        className={`glass fixed inset-x-0 top-0 z-50 border-b transition-[border-color,box-shadow] duration-300 ${
+          isScrolled
+            ? "border-zinc-200 shadow-[0_10px_35px_rgba(9,9,11,0.08)] dark:border-zinc-800 dark:shadow-[0_10px_35px_rgba(0,0,0,0.28)]"
+            : "border-zinc-200/70 dark:border-zinc-800/70"
+        }`}
+      >
+        <nav
+          className={`shell flex items-center justify-between transition-[height] duration-300 ${isScrolled ? "h-16" : "h-20"}`}
+          aria-label="Primary navigation"
+        >
           <Link href="/#hero" className="flex items-center gap-3" aria-label="YusraSoftwares home">
-            <Image src="/assets/logos/yusrasoftwares-mark.svg" width={40} height={40} alt="" priority />
+            <Image src="/assets/logos/yousrasoftware_logo.png" width={35} height={35} className="h-10 w-auto object-contain" alt="" preload />
             <b className="font-neue text-xl tracking-tight font-medium">Yusra<span className="text-accent font-semibold">Softwares</span></b>
           </Link>
           <ul className="hidden items-center gap-7 text-sm lg:flex">
             {siteConfig.nav.map((item) => (
               <li key={item.label}>
                 <Link
-                  onClick={() => {
-                    const nextUrl = new URL(item.href, window.location.origin);
-                    setHash(nextUrl.hash);
-                  }}
+                  onClick={() => selectSection(item.section)}
                   className={`group nav-link inline-flex items-center ${
-                    isCurrent(item.href) ? "text-accent font-medium" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
+                    isCurrent(item) ? "text-accent font-medium" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                   }`}
                   href={item.href}
-                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                  aria-current={isCurrent(item) ? "location" : undefined}
                 >
                   <TextHoverRoll text={item.label} />
                 </Link>
@@ -105,17 +173,25 @@ export function SiteHeader() {
                 className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
               />}
             </span>
-            <Link href="/#contact" className="group btn-primary hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">
-              <TextHoverRoll text="Start a Project" />
-              <RiArrowRightLine className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" size={18} aria-hidden="true" />
-            </Link>
-            <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation"><RiMenuLine size={20} aria-hidden="true" /></button>
+            <Link href="/#contact" onClick={() => selectSection("contact")} className="btn-primary hidden rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project →</Link>
+            <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation">☰</button>
           </div>
         </nav>
         {mobileMenu && (
           <nav id="mobile-nav" className="border-t border-zinc-200 px-5 py-5 lg:hidden dark:border-zinc-800" aria-label="Mobile navigation">
             <ul className="grid gap-4">
-              {siteConfig.nav.map((item) => <li key={item.label}><Link onClick={() => setMobileMenu(false)} href={item.href}>{item.label}</Link></li>)}
+              {siteConfig.nav.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    onClick={() => selectSection(item.section)}
+                    className={isCurrent(item) ? "font-medium text-accent" : "text-zinc-600 dark:text-zinc-300"}
+                    href={item.href}
+                    aria-current={isCurrent(item) ? "location" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         )}

@@ -3,9 +3,7 @@ import {
   CapabilitySection,
   ContactSection,
   HeroSection,
-  InsightsSection,
   ServicesSection,
-  TeamSection,
   WhyUsSection,
   WorkSection,
 } from "./home-page-sections";

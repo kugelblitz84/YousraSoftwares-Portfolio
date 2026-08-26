@@ -5,16 +5,13 @@ import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { CursorFollower } from "@/components/ui/cursor-follower";
 
 export const metadata: Metadata = {
-  title: {
-    default: "YusraSoftwares — Web, Mobile & AI Product Development",
-    template: "%s | YusraSoftwares",
-  },
-  description:
-    "YusraSoftwares designs and develops modern web platforms, mobile applications, UI/UX experiences, and AI-powered solutions for businesses.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  title: { default: "YusraSoftwares — Web, Mobile & AI Product Development", template: "%s | YusraSoftwares" },
+  description: "YusraSoftwares designs and develops modern web platforms, mobile applications, UI/UX experiences, and AI-powered solutions for businesses.",
   icons: { icon: "/assets/icons/favicon.svg" },
   openGraph: {
     type: "website",
-    images: ["/assets/projects/project-placeholder.svg"],
+    images: ["/assets/logos/thumbnail.png"],
   },
   twitter: { card: "summary_large_image" },
 };

@@ -17,7 +17,7 @@ export function SiteFooter() {
               aria-label="YusraSoftwares home"
             >
               <Image
-                src="/assets/logos/yusrasoftwares-mark.svg"
+                src="/assets/logos/yousrasoftware_logo.png"
                 width={42}
                 height={42}
                 alt=""
