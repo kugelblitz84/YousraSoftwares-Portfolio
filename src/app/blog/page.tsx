@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/shared/site-footer";
-import { SiteHeader } from "@/components/shared/site-header";
-import { BlogPage } from "@/features/organizations/blog-page";
+import { BlogIndex } from "./_components/blog-index";
 
 export const metadata: Metadata = {
   title: "Insights",
@@ -9,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <><SiteHeader active={null} /><BlogPage /><SiteFooter /></>;
+  return <BlogIndex />;
 }

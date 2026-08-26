@@ -1,1 +1,113 @@
 @AGENTS.md
+
+# YusraSoftwares Portfolio
+
+Marketing site + project portfolio. Next.js 16.3 App Router (`src/` layout, Turbopack) ·
+React 19.2 · TypeScript 5 strict · Tailwind v4 CSS-first (**no** `tailwind.config`) ·
+framer-motion, lenis, @remixicon/react.
+
+## Commands
+
+| | |
+| --- | --- |
+| `npm run dev` | Dev server |
+| `npm run build` | Production build — must stay fully prerendered |
+| `npm run lint` | ESLint (`eslint-config-next`) |
+| `npx tsc --noEmit` | Typecheck |
+
+**No test framework is installed.** `lint` + `tsc` + `build` is the entire verification
+suite — run all three before calling work done, or use `/check`. No Prettier either;
+match surrounding formatting by hand.
+
+## Structure
+
+| Path | Holds |
+| --- | --- |
+| `src/app/` | Routes only, plus route-local UI in sibling `_components/` |
+| `src/app/_sections/` | Home-page sections; `app/page.tsx` composes them |
+| `src/components/layout/` | `site-header`, `site-footer` — mounted in root layout |
+| `src/components/motion/` | Shared animation primitives (Reveal, KineticHeading, …) |
+| `src/config/site.ts` | Nav model, description, canonical URL |
+| `src/data/` | **All** content: copy, image paths, case-study bodies |
+| `src/styles/globals.css` | Tailwind theme, `@font-face`, shared utility classes |
+| `src/types/` | Shared types |
+
+There is no `lib/`, `utils/`, or `hooks/` — don't create them without asking.
+
+Alias `@/*` → `src/*`. Route-local components are imported **relatively**
+(`../_components/blog-article`); everything cross-route uses `@/`.
+
+## Conventions
+
+- Filenames kebab-case (`site-header.tsx`, `project-data.ts`). Components PascalCase.
+- **Named exports** (`export function SiteHeader`) — every component. Default exports
+  only where Next requires them: `page.tsx`, `layout.tsx`, `error.tsx`, `not-found.tsx`,
+  `sitemap.ts`, `robots.ts`.
+- **Server components by default.** Only 9 files carry `"use client"`; add it solely for
+  hooks, events, or browser APIs.
+- No custom hooks and no state-management library exist. Local `useState` is the norm.
+- Placeholder copy uses the `[BRACKETED CAPS]` idiom.
+
+## Project rules
+
+**Content belongs in `src/data/`, never inline in a component.** Pages resolve params,
+look up a record, `notFound()` on a miss, and hand it to a template.
+
+**Every dynamic route is statically generated.** Copy this shape exactly:
+
+```tsx
+export const dynamicParams = false;                    // unknown slugs 404, never render
+
+export function generateStaticParams() {
+  return items.map(({ slug }) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
+  const { slug } = await params;                       // params is a Promise
+  const item = getItem(slug);
+  if (!item) return {};
+  return { title: item.title, description: item.summary };
+}
+
+export default async function Page({ params }: PageProps<"/blog/[slug]">) {
+  const { slug } = await params;
+  const item = getItem(slug);
+  if (!item) notFound();
+  return <Template item={item} />;
+}
+```
+
+`PageProps<"/route">` and `LayoutProps<"/">` are **global** — never import them, and pass
+the literal route string so param keys get checked. New routes also go in
+[src/app/sitemap.ts](src/app/sitemap.ts), derived from the data module.
+
+**Reuse the utilities in `globals.css`** before writing raw Tailwind: `shell`,
+`section-pad`, `eyebrow`, `card`, `btn-primary`, `tag`, `glass`, `soft-grid`, `balance`,
+`focus-ring`, `nav-link`, `h-bram-title`, `font-neue`, `font-display`, `text-gradient`.
+`section[id]` already has `scroll-margin-top: 5rem` for the fixed header.
+
+**Dark mode is class-based**, not `prefers-color-scheme`:
+`@custom-variant dark (&:where(.dark, .dark *))`. The `.dark` class is set on `<html>` by
+an inline `beforeInteractive` script in `layout.tsx` reading `localStorage.theme`. Give
+every color a `dark:` counterpart.
+
+**Site chrome lives in `app/layout.tsx`** — `SmoothScroll`, `CursorFollower`,
+`SiteHeader`, `SiteFooter`. Never mount them per page; they must survive navigation.
+
+**Never redirect to a URL fragment.** A `next.config.ts` redirect to `/#work` is silently
+dropped on client-side navigation, because `fetch()` strips fragments from `response.url`.
+Link to `/#work` directly. Legacy-path redirects live in `next.config.ts`, not stub pages.
+
+**Adding a nav item** means editing `siteConfig.nav`, where three things are load-bearing:
+`section` must equal the target `<section id>`, array order must match the visual order in
+`page.tsx` (scroll-spy reads `nav[0]` and `nav.at(-1)`), and `href` must be the `/#anchor`
+form.
+
+**Fonts are remote and there is no `next/font`** — Google Fonts `@import` plus a
+CDN-hosted `@font-face` for Neue Montreal, all in `globals.css`.
+
+**`NEXT_PUBLIC_SITE_URL`** feeds `metadataBase`, `sitemap.ts`, and `robots.ts`; unset it
+falls back to `localhost:3000`. Must be set in production.
+
+**`AGENTS.md` is regenerated by `next dev`** — don't hand-edit it; commit it with your
+work if it shows as modified.
