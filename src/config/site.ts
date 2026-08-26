@@ -3,11 +3,11 @@ export const siteConfig = {
   description:
     "Designing and engineering digital products for modern businesses.",
   nav: [
-    { label: "Home", href: "/#hero" },
-    { label: "Services", href: "/#services" },
-    { label: "Works", href: "/projects" },
-    { label: "About", href: "/#about" },
+    { label: "Home", href: "/#hero", section: "hero" },
+    { label: "Services", href: "/#services", section: "services" },
+    { label: "Works", href: "/projects", section: "work" },
+    { label: "About", href: "/#about", section: "about" },
     // { label: "Insights", href: "/blog" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Contact", href: "/#contact", section: "contact" },
   ],
 } as const;

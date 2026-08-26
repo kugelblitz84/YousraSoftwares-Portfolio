@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   icons: { icon: "/assets/icons/favicon.svg" },
   openGraph: {
     type: "website",
-    images: ["/assets/projects/project-placeholder.svg"],
+    images: ["/assets/logos/thumbnail.png"],
   },
   twitter: { card: "summary_large_image" },
 };

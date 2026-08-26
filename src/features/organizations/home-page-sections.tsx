@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { SplitTextReveal } from "@/components/ui/split-text-reveal";
 import { KineticHeading } from "@/components/ui/kinetic-heading";
 import { TextHoverRoll } from "@/components/ui/text-hover-roll";
+import { projectCollections } from "./project-data";
 
 const services = [
   [
@@ -92,40 +93,24 @@ export function HeroSection() {
           className="product-stage"
           aria-label="Web and mobile product interface composition"
         >
-          <div className="device absolute top-8 right-8 left-0 rounded-3xl p-4">
-            <div className="mb-4 flex gap-2">
-              <i className="h-2.5 w-2.5 rounded-full bg-sky-400" />
-              <i className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
-              <i className="h-2.5 w-2.5 rounded-full bg-zinc-300" />
-            </div>
-            <div className="grid grid-cols-[.35fr_.65fr] gap-3">
-              <div className="h-64 rounded-2xl bg-zinc-100 dark:bg-zinc-800" />
-              <div>
-                <div className="brand-gradient h-32 rounded-2xl p-5 text-white">
-                  Products that move businesses forward.
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <div className="h-28 rounded-2xl bg-zinc-100 dark:bg-zinc-800" />
-                  <div className="h-28 rounded-2xl bg-zinc-100 dark:bg-zinc-800" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="device absolute right-0 bottom-0 w-44 rounded-[2rem] p-3">
-            <div className="rounded-[1.5rem] bg-zinc-950 p-4 text-white">
-              <p className="text-[10px] text-cyan-300">MOBILE PRODUCT</p>
-              <p className="mt-2 font-display text-xl font-bold">
-                Built for every screen.
-              </p>
-              <div className="brand-gradient mt-6 h-32 rounded-2xl" />
-            </div>
-          </div>
-          <div className="absolute bottom-8 left-0 rounded-2xl border border-sky-200 bg-white p-4 shadow-xl dark:border-sky-900 dark:bg-zinc-900">
+          <div className="device absolute top-8 right-0 left-0 overflow-hidden rounded-[2rem] p-2">
             <Image
-              src="/assets/logos/yusrasoftwares-mark.svg"
-              width={40}
-              height={40}
+              src="/assets/logos/thumbnail.png"
+              width={1024}
+              height={768}
+              alt="YusraSoftwares dashboard and mobile app preview"
+              className="h-auto w-full rounded-[1.5rem] object-cover"
+              preload
+            />
+          </div>
+          <div className="absolute bottom-0 left-5 rounded-2xl border border-sky-200 bg-white p-4 shadow-xl dark:border-sky-900 dark:bg-zinc-900">
+            <Image
+              src="/assets/logos/yousrasoftware_logo.png"
+              width={35}
+              height={35}
+              className="h-10 w-auto object-contain"
               alt=""
+              preload
             />
             <p className="mt-2 text-xs font-semibold">
               From Idea to Production
@@ -230,20 +215,6 @@ export function ServicesSection() {
   );
 }
 
-const selectedWorks = [
-  {
-    projectType: "Design",
-    projectName: "UI/UX",
-  },
-  {
-    projectType: "Web Platform",
-    projectName: "Web Application",
-  },
-  {
-    projectType: "Mobile Platform",
-    projectName: "Mobile Application",
-  },
-];
 const insights = [
   ["Engineering", "Building software that is ready to evolve"],
   ["Product", "From business problem to product scope"],
@@ -333,21 +304,24 @@ export function WorkSection() {
     <section id="work" className="section-pad shell">
       <div className="flex flex-wrap items-end justify-between gap-5">
         <div>
-          <p className="eyebrow">Our works</p>
+          <p className="eyebrow">Our work</p>
           <KineticHeading
-            lines={[{ text: "Selected Works" }]}
+            lines={[
+              { text: "Choose a" },
+              { text: "discipline", italic: true, gradient: true },
+            ]}
             className="mt-3 h-bram-title text-4xl sm:text-5xl"
           />
-          <p className="mt-4 max-w-2xl text-zinc-500 font-neue text-base">
-            A selection of products, platforms, and experiences built by members
-            of our team.
+          <p className="mt-4 max-w-2xl text-base font-neue text-zinc-500">
+            Explore real web and mobile products, plus our approach to clear,
+            evidence-led digital experiences.
           </p>
         </div>
         <Link
-          href="/projects"
+          href="/projects/web"
           className="group inline-flex items-center gap-1.5 font-medium text-accent hover:text-accent-strong"
         >
-          <TextHoverRoll text="Explore Projects" />
+          <TextHoverRoll text="Browse Projects" />
           <RiArrowRightLine
             className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
             size={18}
@@ -355,43 +329,54 @@ export function WorkSection() {
           />
         </Link>
       </div>
-      <div className="mt-12 grid gap-6 lg:grid-cols-3">
-        {selectedWorks.map((work) => (
-          <article
-            key={work.projectName}
-            data-cursor-text="View Project"
-            className="card group overflow-hidden transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+      <div
+        id="work-categories"
+        className="mt-12 grid scroll-mt-28 gap-6 lg:grid-cols-3"
+      >
+        {projectCollections.map((category, index) => (
+          <Reveal
+            key={category.slug}
+            transition={{ delay: index * 0.08, duration: 0.65 }}
           >
-            <div className="overflow-hidden">
-              <Image
-                src="/assets/projects/project-placeholder.svg"
-                width={1200}
-                height={760}
-                alt={work.projectType + " project placeholder"}
-                className="transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-6">
-              <p className="eyebrow">{work.projectType} · Project slot</p>
-              <h3 className="mt-2 font-neue text-2xl font-medium">
-                {work.projectName}
-              </h3>
-              <p className="mt-3 text-sm text-zinc-500">
-                Add the verified problem and solution.
-              </p>
-              <Link
-                href="/case-study"
-                className="mt-6 inline-flex items-center gap-1.5 font-medium text-accent"
-              >
-                <TextHoverRoll text="View Projects" />
-                <RiArrowRightLine
-                  className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-                  size={18}
-                  aria-hidden="true"
+            <Link
+              href={`/projects/${category.slug}`}
+              data-cursor-text="Explore"
+              className="card group block h-full overflow-hidden"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden bg-zinc-950">
+                <Image
+                  src={category.thumbnail}
+                  alt={`${category.label} projects`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-              </Link>
-            </div>
-          </article>
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/45 via-transparent to-transparent" />
+                <span className="absolute top-5 left-5 rounded-full border border-white/20 bg-zinc-950/60 px-3 py-1 text-xs font-semibold tracking-[.16em] text-white backdrop-blur-md">
+                  {category.number}
+                </span>
+              </div>
+              <div className="p-6 sm:p-7">
+                <p className="eyebrow">{category.quote}</p>
+                <h3 className="mt-3 font-neue text-3xl font-medium tracking-tight transition-colors group-hover:text-sky-500">
+                  {category.shortLabel}
+                </h3>
+                <p className="mt-3 min-h-16 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+                  {category.description}
+                </p>
+                <span className="mt-7 inline-flex items-center gap-1.5 font-medium text-accent">
+                  <TextHoverRoll
+                    text={`Explore ${category.shortLabel} projects`}
+                  />
+                  <RiArrowRightLine
+                    className="shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+                    size={18}
+                    aria-hidden="true"
+                  />
+                </span>
+              </div>
+            </Link>
+          </Reveal>
         ))}
       </div>
     </section>
@@ -617,6 +602,7 @@ export function ContactSection() {
                   "Web Development",
                   "Mobile App Development",
                   "UI/UX Design",
+                  "Brand Design / Rebranding",
                   "AI Integration",
                   "Bug Fix / Existing Project",
                   "Migration / Scaling",
