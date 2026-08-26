@@ -343,7 +343,7 @@ export function WorkSection() {
               data-cursor-text="Explore"
               className="card group block h-full overflow-hidden"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-zinc-950">
+              <div className="relative h-72 overflow-hidden bg-zinc-950 sm:h-80 lg:h-72 xl:h-80">
                 <Image
                   src={category.thumbnail}
                   alt={`${category.label} projects`}
