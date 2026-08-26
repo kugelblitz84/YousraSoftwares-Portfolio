@@ -3,20 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { RiArrowRightLine, RiMenuLine } from "@remixicon/react";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
-import { TextHoverRoll } from "@/components/ui/text-hover-roll";
 
-export function SiteHeader() {
-  const pathname = usePathname();
+type NavSection = (typeof siteConfig.nav)[number]["section"];
+
+type SiteHeaderProps = {
+  active?: NavSection | null;
+};
+
+export function SiteHeader({ active }: SiteHeaderProps) {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [dark, setDark] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
   const themeOrigin = useRef({ x: 0, y: 0 });
+  const currentSection = active === undefined ? visibleSection : active;
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -162,11 +165,8 @@ export function SiteHeader() {
                 className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 dark:border-zinc-800"
               />}
             </span>
-            <Link href="/#contact" className="group btn-primary hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">
-              <TextHoverRoll text="Start a Project" />
-              <RiArrowRightLine className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" size={18} aria-hidden="true" />
-            </Link>
-            <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation"><RiMenuLine size={20} aria-hidden="true" /></button>
+            <Link href="/#contact" onClick={() => selectSection("contact")} className="btn-primary hidden rounded-full px-5 py-2.5 text-sm text-white sm:inline-flex">Start a Project →</Link>
+            <button onClick={() => setMobileMenu((open) => !open)} aria-expanded={mobileMenu} aria-controls="mobile-nav" className="grid h-10 w-10 place-items-center rounded-full border border-zinc-200 lg:hidden dark:border-zinc-800" aria-label="Toggle navigation">☰</button>
           </div>
         </nav>
         {mobileMenu && (
