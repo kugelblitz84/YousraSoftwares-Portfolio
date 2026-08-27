@@ -13,7 +13,7 @@ export function WorkSection() {
         <div>
           <p className="eyebrow">Our work</p>
           <KineticHeading
-            lines={[{ text: "Choose a discipline" }]}
+            lines={[{ text: "Choose a Category" }]}
             className="mt-3 h-bram-title text-4xl sm:text-5xl"
           />
           <p className="mt-4 max-w-2xl text-base font-neue text-zinc-500">
