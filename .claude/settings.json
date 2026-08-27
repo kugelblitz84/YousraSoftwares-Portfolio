@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": [
+      "Read(.env.local)",
+      "Read(.env.development.local)",
+      "Read(.env.production.local)",
+      "Edit(.env.local)",
+      "Edit(AGENTS.md)"
+    ]
+  }
+}

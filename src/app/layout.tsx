@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "@/styles/globals.css";
-import { SmoothScroll } from "@/components/ui/smooth-scroll";
-import { CursorFollower } from "@/components/ui/cursor-follower";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { CursorFollower } from "@/components/motion/cursor-follower";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(siteConfig.url),
   title: { default: "YusraSoftwares — Web, Mobile & AI Product Development", template: "%s | YusraSoftwares" },
   description: "YusraSoftwares designs and develops modern web platforms, mobile applications, UI/UX experiences, and AI-powered solutions for businesses.",
   icons: { icon: "/assets/icons/favicon.svg" },
@@ -27,7 +30,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </Script>
         <SmoothScroll />
         <CursorFollower />
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
