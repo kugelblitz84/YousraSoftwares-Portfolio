@@ -6,7 +6,10 @@ import { Reveal } from "@/components/motion/reveal";
 import { SplitTextReveal } from "@/components/motion/split-text-reveal";
 import { TextHoverRoll } from "@/components/motion/text-hover-roll";
 import { ProjectGallery } from "./project-gallery";
-import { projectCollections, type ProjectCollection } from "@/data/project-data";
+import {
+  projectCollections,
+  type ProjectCollection,
+} from "@/data/project-data";
 
 // "Web Development" renders as "Web" over an italic gradient "Development".
 function headingLines(label: string) {
@@ -29,7 +32,7 @@ export function ProjectList({ collection }: { collection: ProjectCollection }) {
       label: "Collection",
       value: `${collection.number} / ${String(projectCollections.length).padStart(2, "0")}`,
     },
-    { label: "Discipline", value: collection.shortLabel },
+    { label: "Category", value: collection.shortLabel },
   ];
 
   return (
@@ -56,7 +59,10 @@ export function ProjectList({ collection }: { collection: ProjectCollection }) {
                   Home
                 </Link>
               </li>
-              <li aria-hidden="true" className="text-zinc-300 dark:text-zinc-700">
+              <li
+                aria-hidden="true"
+                className="text-zinc-300 dark:text-zinc-700"
+              >
                 /
               </li>
               <li>
@@ -67,7 +73,10 @@ export function ProjectList({ collection }: { collection: ProjectCollection }) {
                   Our work
                 </Link>
               </li>
-              <li aria-hidden="true" className="text-zinc-300 dark:text-zinc-700">
+              <li
+                aria-hidden="true"
+                className="text-zinc-300 dark:text-zinc-700"
+              >
                 /
               </li>
               <li

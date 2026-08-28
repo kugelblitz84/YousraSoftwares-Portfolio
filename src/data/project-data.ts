@@ -84,14 +84,13 @@ export const projectCollections: readonly ProjectCollection[] = [
   },
   {
     slug: "mobile",
-    label: "Mobile Development",
+    label: "Mobile App Development",
     shortLabel: "Mobile",
     number: "02",
     quote: "Designed to move with your users.",
     description:
       "Cross-platform products that turn complex data and workflows into natural Android and iOS experiences.",
-    thumbnail:
-      "/assets/category_thumbnails/yusrasoftwares_mobile_category.png",
+    thumbnail: "/assets/category_thumbnails/yusrasoftwares_mobile_category.png",
     projects: mobileProjects,
   },
   {
