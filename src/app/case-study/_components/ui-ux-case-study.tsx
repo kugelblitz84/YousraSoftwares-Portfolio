@@ -1,16 +1,23 @@
-import Image from "next/image";
 import Link from "next/link";
 import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 import { KineticHeading } from "@/components/motion/kinetic-heading";
 import { SplitTextReveal } from "@/components/motion/split-text-reveal";
 import { TextHoverRoll } from "@/components/motion/text-hover-roll";
+import { CaseStudyChrome } from "./case-study-chrome";
+import { MaskImage } from "./mask-image";
 import type { Project } from "@/data/project-data";
+
+const chapters = [
+  { id: "brief", label: "Design brief" },
+  { id: "gallery", label: "Frames" },
+] as const;
 
 export function UiUxCaseStudy({ project }: { project: Project }) {
   const tags = project.services.split(" · ");
 
   return (
     <main id="main">
+      <CaseStudyChrome chapters={chapters} />
       <article>
         <header className="soft-grid section-pad pt-36 sm:pt-44">
           <div className="shell text-center">
@@ -43,20 +50,27 @@ export function UiUxCaseStudy({ project }: { project: Project }) {
                 </span>
               ))}
             </div>
-            <div className="mt-12 rounded-[2rem] border border-zinc-200 bg-white/80 p-3 shadow-2xl shadow-sky-500/10 sm:p-6 dark:border-zinc-800 dark:bg-zinc-900/80">
-              <Image
-                src={project.cover}
-                width={1200}
-                height={760}
-                className="w-full rounded-2xl"
-                alt={`Placeholder for the ${project.name} presentation`}
-                preload
+            <div className="relative mt-12">
+              <div
+                aria-hidden="true"
+                className="absolute -inset-4 rounded-[2rem] bg-gradient-to-tr from-sky-500/20 via-cyan-400/10 to-transparent blur-2xl"
               />
+              <div className="relative rounded-[2rem] border border-zinc-200 bg-white/80 p-3 shadow-2xl shadow-sky-500/10 sm:p-6 dark:border-zinc-800 dark:bg-zinc-900/80">
+                <MaskImage
+                  src={project.cover}
+                  alt={`Placeholder for the ${project.name} presentation`}
+                  sizes="(max-width: 1023px) 100vw, 80vw"
+                  delay={0.25}
+                  parallax={0.2}
+                  preload
+                  className="aspect-video rounded-2xl border border-zinc-200 dark:border-zinc-800"
+                />
+              </div>
             </div>
           </div>
         </header>
 
-        <section className="section-pad shell">
+        <section id="brief" className="section-pad shell">
           <div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr]">
             <div>
               <p className="eyebrow">Design brief</p>
@@ -179,7 +193,10 @@ export function UiUxCaseStudy({ project }: { project: Project }) {
         </section>
 
         {project.gallery.length > 0 && (
-          <section className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white">
+          <section
+            id="gallery"
+            className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white"
+          >
             <div className="shell">
               <div className="flex flex-wrap items-end justify-between gap-6">
                 <div>
@@ -195,13 +212,15 @@ export function UiUxCaseStudy({ project }: { project: Project }) {
               </div>
               <div className="mt-10 grid gap-5 sm:grid-cols-2">
                 {project.gallery.map((src, index) => (
-                  <Image
-                    key={index}
+                  <MaskImage
+                    // Placeholder projects repeat the same src, so the path
+                    // alone is not a unique key.
+                    key={`${src}-${index}`}
                     src={src}
-                    width={1200}
-                    height={760}
-                    className="rounded-2xl"
                     alt={`${project.name} frame placeholder ${index + 1}`}
+                    sizes="(max-width: 1023px) 100vw, 50vw"
+                    delay={index * 0.12}
+                    className="aspect-video rounded-2xl bg-zinc-950 shadow-lg"
                   />
                 ))}
               </div>

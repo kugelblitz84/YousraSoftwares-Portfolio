@@ -1,22 +1,36 @@
-import Image from "next/image";
 import Link from "next/link";
 import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 import { KineticHeading } from "@/components/motion/kinetic-heading";
 import { SplitTextReveal } from "@/components/motion/split-text-reveal";
 import { TextHoverRoll } from "@/components/motion/text-hover-roll";
+import { CaseStudyChrome } from "./case-study-chrome";
+import { CaseStudyHeroBg } from "./case-study-hero-bg";
+import { MaskImage } from "./mask-image";
+import { SpotlightCard } from "./spotlight-card";
 import type { WebProject } from "@/data/web-project-data";
+
+const chapters = [
+  { id: "overview", label: "Overview" },
+  { id: "thinking", label: "Product thinking" },
+  { id: "experience", label: "Core experience" },
+  { id: "foundations", label: "Foundations" },
+  { id: "audience", label: "Audience" },
+  { id: "gallery", label: "Gallery" },
+] as const;
 
 export function WebCaseStudy({ project }: { project: WebProject }) {
   const study = project.caseStudy;
 
   return (
     <main id="main">
+      <CaseStudyChrome chapters={chapters} />
       <article>
-        <header className="overflow-hidden border-b border-zinc-200 bg-zinc-50 pt-36 sm:pt-44 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white">
-          <div className="shell pb-16 sm:pb-20">
+        <header className="relative overflow-hidden border-b border-zinc-200 pt-36 pb-16 sm:pt-44 sm:pb-20 dark:border-zinc-800">
+          <CaseStudyHeroBg src={project.cover} />
+          <div className="shell relative">
             <Link
               href="/projects/web"
-              className="group inline-flex items-center gap-1.5 text-sm font-medium text-sky-600 transition hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300"
+              className="group relative inline-flex items-center gap-1.5 text-sm font-medium text-sky-600 transition hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300"
             >
               <RiArrowLeftLine
                 className="shrink-0 transition-transform duration-300 group-hover:-translate-x-1"
@@ -51,22 +65,26 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-zinc-900/15 sm:rounded-3xl dark:border-white/10 dark:bg-zinc-900 dark:shadow-black/40">
-                <Image
+              <div className="relative">
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-4 rounded-[2rem] bg-gradient-to-tr from-sky-500/25 via-cyan-400/10 to-transparent blur-2xl"
+                />
+                <MaskImage
                   src={project.cover}
-                  width={3840}
-                  height={2160}
-                  className="aspect-video h-full w-full object-cover"
                   alt={study.gallery[0].alt}
-                  preload
                   sizes="(max-width: 1023px) 100vw, 58vw"
+                  delay={0.25}
+                  parallax={0.22}
+                  preload
+                  className="aspect-video rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-zinc-900/15 sm:rounded-3xl dark:border-white/10 dark:bg-zinc-900 dark:shadow-black/40"
                 />
               </div>
             </div>
           </div>
         </header>
 
-        <section className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+        <section id="overview" className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
           <div className="shell grid sm:grid-cols-2 lg:grid-cols-4">
             {study.facts.map(([label, value]) => (
               <div
@@ -96,11 +114,14 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
           </div>
         </section>
 
-        <section className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40">
+        <section
+          id="thinking"
+          className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/40"
+        >
           <div className="shell">
             <p className="eyebrow">Product thinking</p>
             <div className="mt-8 grid gap-5 lg:grid-cols-2">
-              <div className="card p-7 sm:p-9">
+              <SpotlightCard delay={0}>
                 <p className="text-sm font-semibold text-sky-600 dark:text-sky-400">
                   01 · The challenge
                 </p>
@@ -110,8 +131,8 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
                 <p className="mt-5 leading-relaxed text-zinc-600 dark:text-zinc-400">
                   {study.challenge}
                 </p>
-              </div>
-              <div className="card p-7 sm:p-9">
+              </SpotlightCard>
+              <SpotlightCard delay={0.09}>
                 <p className="text-sm font-semibold text-sky-600 dark:text-sky-400">
                   02 · The approach
                 </p>
@@ -121,12 +142,12 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
                 <p className="mt-5 leading-relaxed text-zinc-600 dark:text-zinc-400">
                   {study.approach}
                 </p>
-              </div>
+              </SpotlightCard>
             </div>
           </div>
         </section>
 
-        <section className="section-pad shell">
+        <section id="experience" className="section-pad shell">
           <p className="eyebrow">Core experience</p>
           <h2 className="balance mt-4 max-w-3xl font-display text-4xl font-bold sm:text-5xl">
             From inspiration to a completed booking.
@@ -135,12 +156,18 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
             {study.featureGroups.map((feature, index) => (
               <div
                 key={feature.title}
-                className="bg-white p-7 dark:bg-zinc-950"
+                className="group relative bg-white p-7 dark:bg-zinc-950"
               >
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-sky-500 to-cyan-400 transition-transform duration-500 group-hover:scale-x-100"
+                />
                 <span className="text-xs font-semibold tracking-[.16em] text-sky-500">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-6 text-xl font-semibold">{feature.title}</h3>
+                <h3 className="mt-6 text-xl font-semibold transition-colors duration-300 group-hover:text-sky-600 dark:group-hover:text-sky-400">
+                  {feature.title}
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
                   {feature.description}
                 </p>
@@ -149,7 +176,10 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
           </div>
         </section>
 
-        <section className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white">
+        <section
+          id="foundations"
+          className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white"
+        >
           <div className="shell">
             <p className="eyebrow">Product foundation</p>
             <div className="mt-4 grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
@@ -166,7 +196,7 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
               {study.productFoundations.map((item, index) => (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-zinc-200 bg-white p-7 dark:border-zinc-800 dark:bg-zinc-900/60"
+                  className="group rounded-2xl border border-zinc-200 bg-white p-7 transition-colors duration-300 hover:border-sky-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-sky-800"
                 >
                   <span className="text-xs font-semibold tracking-[.16em] text-cyan-600 dark:text-cyan-400">
                     0{index + 1}
@@ -181,7 +211,7 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
           </div>
         </section>
 
-        <section className="section-pad shell">
+        <section id="audience" className="section-pad shell">
           <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
             <div>
               <p className="eyebrow">Who it serves</p>
@@ -205,7 +235,10 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
           </div>
         </section>
 
-        <section className="section-pad border-y border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/60">
+        <section
+          id="gallery"
+          className="section-pad border-y border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/60"
+        >
           <div className="shell">
             <p className="eyebrow">Project gallery</p>
             <h2 className="mt-4 font-display text-4xl font-bold">
@@ -217,20 +250,17 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
                   key={image.src}
                   className={index === 0 ? "lg:col-span-2" : ""}
                 >
-                  <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 shadow-lg dark:border-zinc-800">
-                    <Image
-                      src={image.src}
-                      width={3840}
-                      height={2160}
-                      className="aspect-video w-full object-cover"
-                      alt={image.alt}
-                      sizes={
-                        index === 0
-                          ? "100vw"
-                          : "(max-width: 1023px) 100vw, 50vw"
-                      }
-                    />
-                  </div>
+                  <MaskImage
+                    src={image.src}
+                    alt={image.alt}
+                    sizes={
+                      index === 0
+                        ? "100vw"
+                        : "(max-width: 1023px) 100vw, 50vw"
+                    }
+                    delay={index * 0.12}
+                    className="aspect-video rounded-2xl border border-zinc-200 bg-zinc-950 shadow-lg dark:border-zinc-800"
+                  />
                   <figcaption className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
                     {image.caption}
                   </figcaption>
