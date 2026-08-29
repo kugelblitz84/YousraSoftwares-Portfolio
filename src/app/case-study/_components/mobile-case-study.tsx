@@ -1,11 +1,15 @@
 import Link from "next/link";
-import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
+import { RiArrowLeftLine } from "@remixicon/react";
 import { KineticHeading } from "@/components/motion/kinetic-heading";
 import { SplitTextReveal } from "@/components/motion/split-text-reveal";
 import { TextHoverRoll } from "@/components/motion/text-hover-roll";
+import { CaseStudyAudience } from "./case-study-audience";
 import { CaseStudyChrome } from "./case-study-chrome";
 import { CaseStudyHeroBg } from "./case-study-hero-bg";
+import { CaseStudyOutro } from "./case-study-outro";
 import { MaskImage } from "./mask-image";
+import { OverviewFacts } from "./overview-facts";
+import { OverviewProse } from "./overview-prose";
 import { SpotlightCard } from "./spotlight-card";
 import { mobileProjects, type MobileProject } from "@/data/mobile-project-data";
 
@@ -89,33 +93,30 @@ export function MobileCaseStudy({ project }: { project: MobileProject }) {
           </div>
         </header>
 
-        <section id="overview" className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-          <div className="shell grid sm:grid-cols-2 lg:grid-cols-4">
-            {study.facts.map(([label, value]) => (
-              <div
-                key={label}
-                className="border-b border-zinc-200 py-6 sm:border-r sm:px-6 sm:first:pl-0 sm:nth-[2]:border-r-0 lg:border-b-0 lg:nth-[2]:border-r lg:last:border-r-0 dark:border-zinc-800"
-              >
-                <p className="text-[.68rem] tracking-[.16em] text-zinc-400 uppercase">
-                  {label}
-                </p>
-                <p className="mt-2 font-medium">{value}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="section-pad shell grid gap-10 lg:grid-cols-[.35fr_1fr] lg:gap-20">
-          <div>
-            <p className="eyebrow">Overview</p>
-            <h2 className="balance mt-4 font-display text-3xl font-bold">
-              A product built around the whole journey.
-            </h2>
-          </div>
-          <div className="max-w-3xl space-y-5 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-            {study.overview.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+        {/* No `overflow-hidden` here: the facts card is deliberately pulled up
+            past this section's top edge, and clipping the section would shear
+            off the card's first 56px — its rule and index number. The ambient
+            wash below is inset instead, so nothing needs clipping. */}
+        <section
+          id="overview"
+          className="relative border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950"
+        >
+          {/* Ambient wash anchoring the facts card to the hero above it. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-sky-500/7 to-transparent dark:from-sky-400/6"
+          />
+          <div className="shell relative">
+            {/* Pulled up so the card overlaps the hero's lower edge. */}
+            <div className="-mt-10 sm:-mt-14">
+              <OverviewFacts facts={study.facts} />
+            </div>
+            <div className="section-pad">
+              <OverviewProse
+                heading="A product built around the whole journey."
+                paragraphs={study.overview}
+              />
+            </div>
           </div>
         </section>
 
@@ -218,29 +219,14 @@ export function MobileCaseStudy({ project }: { project: MobileProject }) {
           </div>
         </section>
 
-        <section id="audience" className="section-pad shell">
-          <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
-            <div>
-              <p className="eyebrow">Who it serves</p>
-              <h2 className="mt-4 font-display text-4xl font-bold">
-                Designed for a broad, real-world audience.
-              </h2>
-              <div className="mt-7 flex flex-wrap gap-2">
-                {study.audience.map((audience) => (
-                  <span key={audience} className="tag">
-                    {audience}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-3xl border border-sky-200 bg-sky-50 p-7 sm:p-10 dark:border-sky-900 dark:bg-sky-950/30">
-              <p className="eyebrow">Product outcome</p>
-              <p className="mt-5 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
-                {study.outcome}
-              </p>
-            </div>
-          </div>
-        </section>
+        <CaseStudyAudience
+          headingLines={[
+            { text: "Designed for a broad," },
+            { text: "real-world audience.", italic: true, gradient: true },
+          ]}
+          audience={study.audience}
+          outcome={study.outcome}
+        />
 
         <section
           id="gallery"
@@ -278,31 +264,19 @@ export function MobileCaseStudy({ project }: { project: MobileProject }) {
         </section>
       </article>
 
-      <section className="section-pad border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white">
-        <div className="shell flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
-          <div>
-            <p className="eyebrow">Next mobile case study</p>
-            <KineticHeading
-              lines={[{ text: nextProject.name }]}
-              className="mt-4 h-bram-title text-4xl"
-            />
-            <p className="mt-3 max-w-xl text-zinc-600 dark:text-zinc-400">
-              {nextProject.description}
-            </p>
-          </div>
-          <Link
-            href={nextProject.detailHref}
-            className="group btn-primary inline-flex shrink-0 items-center rounded-full px-7 py-3.5 text-white"
-          >
-            <TextHoverRoll text={`View ${nextProject.name}`} />
-            <RiArrowRightLine
-              className="ml-2 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-              size={18}
-              aria-hidden="true"
-            />
-          </Link>
-        </div>
-      </section>
+      <CaseStudyOutro
+        eyebrow="Next mobile case study"
+        headingLines={[{ text: nextProject.name, gradient: true }]}
+        description={nextProject.description}
+        primary={{
+          href: nextProject.detailHref,
+          label: `View ${nextProject.name}`,
+        }}
+        secondary={{
+          href: "/projects/mobile",
+          label: "Browse all mobile projects",
+        }}
+      />
     </main>
   );
 }

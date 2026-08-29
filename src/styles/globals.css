@@ -113,10 +113,16 @@ body {
 }
 
 /* Text Mask & Line Split Animation Styles */
+/* `overflow: hidden` is what makes the mask reveal work — the line slides up
+   from below and is clipped until it lands. That clip edge also cuts descenders
+   (y, g, j), because a tight `line-height` (Tailwind's `text-5xl` ships 1.0)
+   makes the line box shorter than the font's glyph area, so glyphs overflow it
+   by ~0.1em. The padding buys that overflow back; italic descenders slant
+   deeper, hence the headroom. Do not shrink it below ~0.15em. */
 .line-wrap {
   overflow: hidden;
   display: block;
-  padding-bottom: 0.08em;
+  padding-bottom: 0.2em;
 }
 .split-line {
   display: block;

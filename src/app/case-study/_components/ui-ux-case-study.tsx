@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
+import { RiArrowLeftLine } from "@remixicon/react";
 import { KineticHeading } from "@/components/motion/kinetic-heading";
 import { SplitTextReveal } from "@/components/motion/split-text-reveal";
 import { TextHoverRoll } from "@/components/motion/text-hover-roll";
 import { CaseStudyChrome } from "./case-study-chrome";
+import { CaseStudyOutro } from "./case-study-outro";
 import { MaskImage } from "./mask-image";
 import type { Project } from "@/data/project-data";
 
@@ -228,27 +229,19 @@ export function UiUxCaseStudy({ project }: { project: Project }) {
           </section>
         )}
       </article>
-      <section className="section-pad text-center">
-        <p className="eyebrow">Need clarity in your product?</p>
-        <KineticHeading
-          lines={[
-            { text: "Let's shape an experience" },
-            { text: "people understand.", italic: true, gradient: true },
-          ]}
-          className="mx-auto mt-4 max-w-3xl h-bram-title text-4xl"
-        />
-        <Link
-          href="/#contact"
-          className="group btn-primary mt-7 inline-flex items-center rounded-full px-7 py-3.5 text-white"
-        >
-          <TextHoverRoll text="Start a design project" />
-          <RiArrowRightLine
-            className="ml-2 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-            size={18}
-            aria-hidden="true"
-          />
-        </Link>
-      </section>
+      <CaseStudyOutro
+        eyebrow="Need clarity in your product?"
+        headingLines={[
+          { text: "Let's shape an experience" },
+          { text: "people understand.", italic: true, gradient: true },
+        ]}
+        description="Research, flows and interface systems that make the next release obvious to the people using it."
+        primary={{ href: "/#contact", label: "Start a design project" }}
+        secondary={{
+          href: "/projects/ui-ux",
+          label: "Browse all design projects",
+        }}
+      />
     </main>
   );
 }
