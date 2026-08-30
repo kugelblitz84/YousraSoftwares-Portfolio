@@ -3,7 +3,8 @@
 
 @font-face {
   font-family: "Neue Montreal";
-  src: url("https://cdn.prod.website-files.com/6978dadfad803d74561d3cfc/6978db18e5260abfde356557_NeueMontreal-Regular.otf") format("opentype");
+  src: url("https://cdn.prod.website-files.com/6978dadfad803d74561d3cfc/6978db18e5260abfde356557_NeueMontreal-Regular.otf")
+    format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -11,7 +12,8 @@
 
 @font-face {
   font-family: "Neue Montreal";
-  src: url("https://cdn.prod.website-files.com/6978dadfad803d74561d3cfc/6978db181a17d20336c24486_NeueMontreal-MediumItalic.otf") format("opentype");
+  src: url("https://cdn.prod.website-files.com/6978dadfad803d74561d3cfc/6978db181a17d20336c24486_NeueMontreal-MediumItalic.otf")
+    format("opentype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -19,7 +21,8 @@
 
 @font-face {
   font-family: "Neue Montreal";
-  src: url("https://cdn.prod.website-files.com/6978dadfad803d74561d3cfc/6978db18d7bc6b078a3086f4_NeueMontreal-Medium.otf") format("opentype");
+  src: url("https://cdn.prod.website-files.com/6978dadfad803d74561d3cfc/6978db18d7bc6b078a3086f4_NeueMontreal-Medium.otf")
+    format("opentype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -65,7 +68,9 @@ html {
 }
 body {
   font-family: "Neue Montreal", "Plus Jakarta Sans", "DM Sans", sans-serif;
-  font-feature-settings: "kern" 1, "liga" 1;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1;
   text-rendering: optimizeLegibility;
 }
 .font-neue {
@@ -125,7 +130,7 @@ body {
   padding-bottom: 0.2em;
 }
 .split-line {
-  display: block;
+  display: inline;
   will-change: transform, opacity;
 }
 
@@ -320,7 +325,10 @@ select:focus-visible {
 }
 .project-list-tile {
   display: grid;
-  grid-template-columns: minmax(220px, 0.72fr) minmax(260px, 1fr) minmax(190px, 0.5fr);
+  grid-template-columns: minmax(220px, 0.72fr) minmax(260px, 1fr) minmax(
+      190px,
+      0.5fr
+    );
   gap: clamp(1rem, 2vw, 2rem);
   align-items: center;
   min-height: 248px;

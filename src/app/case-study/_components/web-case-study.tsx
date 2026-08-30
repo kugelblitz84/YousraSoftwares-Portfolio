@@ -5,6 +5,7 @@ import { SplitTextReveal } from "@/components/motion/split-text-reveal";
 import { TextHoverRoll } from "@/components/motion/text-hover-roll";
 import { CaseStudyAudience } from "./case-study-audience";
 import { CaseStudyChrome } from "./case-study-chrome";
+import { CaseStudyFoundations } from "./case-study-foundations";
 import { CaseStudyHeroBg } from "./case-study-hero-bg";
 import { CaseStudyOutro } from "./case-study-outro";
 import { MaskImage } from "./mask-image";
@@ -177,40 +178,16 @@ export function WebCaseStudy({ project }: { project: WebProject }) {
           </div>
         </section>
 
-        <section
+        <CaseStudyFoundations
           id="foundations"
-          className="section-pad border-y border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white"
-        >
-          <div className="shell">
-            <p className="eyebrow">Product foundation</p>
-            <div className="mt-4 grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
-              <h2 className="balance font-display text-4xl font-bold sm:text-5xl">
-                A coherent system across every stage.
-              </h2>
-              <p className="max-w-2xl text-zinc-600 dark:text-zinc-400">
-                The interfaces maintain a familiar product language as
-                travellers move from broad exploration into detailed,
-                transaction-heavy flows.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-4 lg:grid-cols-3">
-              {study.productFoundations.map((item, index) => (
-                <div
-                  key={item.title}
-                  className="group rounded-2xl border border-zinc-200 bg-white p-7 transition-colors duration-300 hover:border-sky-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-sky-800"
-                >
-                  <span className="text-xs font-semibold tracking-[.16em] text-cyan-600 dark:text-cyan-400">
-                    0{index + 1}
-                  </span>
-                  <h3 className="mt-6 text-xl font-semibold">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          eyebrow="Product foundation"
+          headingLines={[
+            { text: "A coherent system" },
+            { text: "across every stage.", italic: true, gradient: true },
+          ]}
+          lede="The interfaces maintain a familiar product language as travellers move from broad exploration into detailed, transaction-heavy flows."
+          items={study.productFoundations}
+        />
 
         <CaseStudyAudience
           headingLines={[
